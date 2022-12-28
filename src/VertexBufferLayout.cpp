@@ -1,7 +1,6 @@
 #include "VertexBufferLayout.hpp"
 #include <iostream>
 
-
 VertexBufferLayout::VertexBufferLayout(){
 }
 

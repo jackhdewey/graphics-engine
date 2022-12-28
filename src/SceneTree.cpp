@@ -1,7 +1,3 @@
-/**
- * Created by Jack Dewey on 6/21/22.
- */
-
 #include "SceneTree.hpp"
 
 #include <string>

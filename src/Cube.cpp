@@ -1,7 +1,3 @@
-//
-// Created by Jack Dewey on 11/25/22.
-//
-
 #include "Cube.hpp"
 
 Cube::Cube() : Object() {

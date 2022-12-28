@@ -1,7 +1,3 @@
-/**
- * Created by Jack Dewey on 6/22/22.
- */
-
 #include "Sphere.hpp"
 
 /**

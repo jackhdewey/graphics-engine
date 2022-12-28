@@ -1,7 +1,3 @@
-/**
- * The main function for our graphics program.
- */
-
 #include "SDLGraphicsProgram.hpp"
 
 int main(int argc, char** argv){

@@ -1,5 +1,5 @@
-//
-// Created by Jack Dewey on 12/3/22.
-//
+/**
+ * Placeholder, will eventually hold class for placing a light in the scene.
+ */
 
 #include "Light.hpp"
