@@ -15,7 +15,7 @@ SceneNode::SceneNode(Object* object, SceneNode* parent, bool wireframe) {
 
     std::string vertexShader = m_shader.LoadShader("./shaders/vert.glsl");
     std::string fragmentShader = m_shader.LoadShader("./shaders/depthmap.glsl");
-    m_shader.CreateShader(vertexShader, fragmentShader);
+    m_shader.CreateProgram(vertexShader, fragmentShader);
     if (m_object->HasTexture()) {
         m_shader.SetUniform1i("u_DiffuseMap", 0);
     }
@@ -31,7 +31,7 @@ SceneNode::SceneNode(Object* object, bool wireframe) {
 
     std::string vertexShader = m_shader.LoadShader("./shaders/vert.glsl");
     std::string fragmentShader = m_shader.LoadShader("./shaders/depthmap.glsl");
-    m_shader.CreateShader(vertexShader, fragmentShader);
+    m_shader.CreateProgram(vertexShader, fragmentShader);
     if (m_object->HasTexture()) {
         m_shader.SetUniform1i("u_DiffuseMap", 0);
     }

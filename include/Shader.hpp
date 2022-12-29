@@ -32,11 +32,21 @@ public:
      */
     ~Shader();
 
-    // Read from a shader file and copy contents into a string
+    /**
+     * Copy the contents of a shader file into a string.
+     *
+     * @param fname the name of the shader file
+     * @return a string containing the program code
+     */
     std::string LoadShader(const std::string& fname);
 
-    // Compile, attach, and link shader to program
-    void CreateShader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource);
+    /**
+     * Creates a shader program given vertex and fragment shader source strings and updated m_programID.
+     *
+     * @param vertexShaderSource the string source for the vertex shader
+     * @param fragmentShaderSource the string source for the fragment shader
+     */
+    void CreateProgram(const std::string& vertexShaderSource, const std::string& fragmentShaderSource);
 
     // Bind shader program to OpenGL
     void Bind() const;
@@ -56,9 +66,15 @@ public:
 private:
 
     // Unique shader ID
-    GLuint m_shaderID;
+    GLuint m_programID;
 
-    // Compiles loaded shaders
+    /**
+     * Compile the shader from a source string and return its id.
+     *
+     * @param type the shader type
+     * @param source the string containing the program code
+     * @return the id of the compiled shader
+     */
     unsigned int CompileShader(unsigned int type, const std::string& source);
 
     // Makes sure shaders 'link' successfully

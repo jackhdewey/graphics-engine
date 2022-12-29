@@ -7,51 +7,47 @@ Shader::Shader(){}
 
 Shader::~Shader(){
 	// Deallocate Program
-	glDeleteProgram(m_shaderID);
+	glDeleteProgram(m_programID);
 }
 
 std::string Shader::LoadShader(const std::string& fname){
 
-		std::ifstream myFile(fname.c_str());
-        std::string line;
-        std::string result;
+    std::ifstream myFile(fname.c_str());
+    std::string line;
+    std::string result;
 
-		if (myFile.is_open()){
-			while (getline(myFile,line)){
-					result += line + '\n';
-					// SDL_Log(line);
-			}
-		}
-		else{
-			Log("LoadShader", "File not found. Try an absolute file path to see if the file exists.");
-		}
-		myFile.close();
-		return result;
+    if (myFile.is_open()){
+        while (getline(myFile,line)){
+            result += line + '\n';
+            // SDL_Log(line);
+        }
+    }
+    else{
+        Log("LoadShader", "File not found. Try an absolute file path to see if the file exists.");
+    }
+    myFile.close();
+    return result;
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source){
 
-    // id is the type of shader (vertex, fragment, etc.)
     unsigned int id;
-
     if (type == GL_VERTEX_SHADER) {
         id = glCreateShader(GL_VERTEX_SHADER);
     } else if (type == GL_FRAGMENT_SHADER) {
         id = glCreateShader(GL_FRAGMENT_SHADER);
     }
 
-    // The source of our shader
+    // Convert the source string into a C string
     const char* src = source.c_str();
-    glShaderSource(id, 1, &src, nullptr);
 
-    // Now compile our shader
+    // Set the shader source and compile
+    glShaderSource(id, 1, &src, nullptr);
     glCompileShader(id);
 
-    // Retrieve the result of our compilation
+    // Return any compilation errors that may have occurred
     int result;
     glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-
-    // Return any compilation errors that may have occurred
     if (result == GL_FALSE){
         int length;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
@@ -73,7 +69,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
     return id;
 }
 
-void Shader::CreateShader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource){
+void Shader::CreateProgram(const std::string& vertexShaderSource, const std::string& fragmentShaderSource){
 
     // Create a new program
     unsigned int program = glCreateProgram();
@@ -90,17 +86,25 @@ void Shader::CreateShader(const std::string& vertexShaderSource, const std::stri
     glLinkProgram(program);
     glValidateProgram(program);
 
-    // Once the shaders have been linked, we can delete them.
+    // Once the shaders have been linked, we can delete them
     glDetachShader(program, myVertexShader);
     glDetachShader(program, myFragmentShader);
     glDeleteShader(myVertexShader);
     glDeleteShader(myFragmentShader);
 
     if(!CheckLinkStatus(program)){
-        Log("CreateShader", "ERROR, shader did not link! Were there compile errors in the shader?");
+        Log("CreateProgram", "ERROR, program did not link! Were there compile errors in the shader?");
     }
 
-    m_shaderID = program;
+    m_programID = program;
+}
+
+void Shader::Bind() const{
+    glUseProgram(m_programID);
+}
+
+void Shader::Unbind() const{
+    glUseProgram(0);
 }
 
 bool Shader::CheckLinkStatus(GLuint programID){                                                                             
@@ -126,18 +130,10 @@ void Shader::Log(const char* system, const char* message){
     std::cout << "[" << system << "]" << message << "\n";
 }
 
-void Shader::Bind() const{
-    glUseProgram(m_shaderID);
-}
-
-void Shader::Unbind() const{
-    glUseProgram(0);
-}
-
 // Set a uniform 4x4 matrix in our shader.
 void Shader::SetUniformMatrix4fv(const GLchar* name, const GLfloat* value){
     // search the shader for a particular variable of this name
-    GLint location = glGetUniformLocation(m_shaderID, name);
+    GLint location = glGetUniformLocation(m_programID, name);
 
     // Update the value at this uniform location
     // glUniformMatrix4v means a 4x4 matrix of floats
@@ -146,22 +142,22 @@ void Shader::SetUniformMatrix4fv(const GLchar* name, const GLfloat* value){
 
 // Set a uniform vec3 in our shader
 void Shader::SetUniform3f(const GLchar* name, float v0, float v1, float v2){
-    GLint location = glGetUniformLocation(m_shaderID, name);
+    GLint location = glGetUniformLocation(m_programID, name);
     glUniform3f(location, v0, v1, v2);
 }
 
 // Sets a uniform integer in our shader.
 void Shader::SetUniform1i(const GLchar* name, int value){
-    GLint location = glGetUniformLocation(m_shaderID, name);
+    GLint location = glGetUniformLocation(m_programID, name);
     glUniform1i(location, value);
 }
 
 // Sets a uniform float value in our shader
 void Shader::SetUniform1f(const GLchar* name, float value){
-    GLint location = glGetUniformLocation(m_shaderID, name);
+    GLint location = glGetUniformLocation(m_programID, name);
     glUniform1f(location, value);
 }
 
 GLuint Shader::GetID() const{
-    return m_shaderID;
+    return m_programID;
 }
