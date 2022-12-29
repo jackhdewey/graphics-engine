@@ -80,11 +80,12 @@ void Geometry::AddIndex(unsigned int i){
 }
 
 /**
- * When we make a triangle, we also need compute normals, tangents and bi-tangents.
+ * Given a set of three vertices, 'assembles' them into a triangle.
+ * Effectively, we compute tangents and bi-tangents.
  *
- * @param vert0
- * @param vert1
- * @param vert2
+ * @param vert0 index of first vertex
+ * @param vert1 index of second vertex
+ * @param vert2 index of third vertex
  */
 void Geometry::MakeTriangle(unsigned int vert0, unsigned int vert1, unsigned int vert2) {
 
@@ -93,7 +94,7 @@ void Geometry::MakeTriangle(unsigned int vert0, unsigned int vert1, unsigned int
 	m_indices.push_back(vert1);	
 	m_indices.push_back(vert2);	
 
-	// Look up the actual vertex positions
+	// Look up the vertex positions
 	glm::vec3 pos0(m_vertexPositions[vert0*3 +0], m_vertexPositions[vert0*3 + 1], m_vertexPositions[vert0*3 + 2]); 
 	glm::vec3 pos1(m_vertexPositions[vert1*3 +0], m_vertexPositions[vert1*3 + 1], m_vertexPositions[vert1*3 + 2]); 
 	glm::vec3 pos2(m_vertexPositions[vert2*3 +0], m_vertexPositions[vert2*3 + 1], m_vertexPositions[vert2*3 + 2]); 
@@ -145,22 +146,21 @@ void Geometry::MakeTriangle(unsigned int vert0, unsigned int vert1, unsigned int
 }
 
 /**
- * Push all of our data from each individual vertex into a single vector.
+ * Push all of our data into a single vector.
  */
 void Geometry::Gen(){
     assert((m_vertexPositions.size()/3) == (m_textureCoords.size()/2));
 
     int coordsPos =0;
     for (int i =0; i < m_vertexPositions.size()/3; ++i) {
-
         // vertices
         m_bufferData.push_back(m_vertexPositions[i*3+ 0]);
         m_bufferData.push_back(m_vertexPositions[i*3+ 1]);
         m_bufferData.push_back(m_vertexPositions[i*3+ 2]);
         // texture information
-        // Note separate counter because we only have two dimensions
         m_bufferData.push_back(m_textureCoords[coordsPos*2+0]);
         m_bufferData.push_back(m_textureCoords[coordsPos*2+1]);
+        // Note separate counter because we only have two dimensions
         coordsPos++;
         // normals
         m_bufferData.push_back(m_normals[i*3+0]);

@@ -135,7 +135,7 @@ void SDLGraphicsProgram::Loop(){
     SDL_StartTextInput();
 
     // Set the camera speed for how fast we move.
-    float cameraSpeed = 5.0f;
+    float cameraSpeed = 1.0f;
 
     // While application is running
     while(!quit){

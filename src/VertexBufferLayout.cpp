@@ -83,6 +83,7 @@ void VertexBufferLayout::CreateTextureBufferLayout(unsigned int vcount, unsigned
         // Vertex Attributes
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float)*m_stride, 0);
+        // texture coordinates
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE, sizeof(float)*m_stride, (char*)(sizeof(float)*3));
 
@@ -110,23 +111,19 @@ void VertexBufferLayout::CreateNormalBufferLayout(unsigned int vcount, unsigned 
         glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject);
         glBufferData(GL_ARRAY_BUFFER, vcount*sizeof(float), vdata, GL_STATIC_DRAW);
 
-        // Add three floats for position coordinates
+        // Vertex Attributes
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float)*m_stride, 0);
-
-        // Add two floats for texture coordinates
+        // texture coordinates
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float)*m_stride, (char*)(sizeof(float)*3));
-
-        // Add three floats for normal vector
+        // normal vectors
         glEnableVertexAttribArray(2);
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float)*m_stride, (char*)(sizeof(float)*5));
-
-        // Add three floats for tangent vector
+        // tangent vectors
         glEnableVertexAttribArray(3);
         glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(float)*m_stride, (char*)(sizeof(float)*8));
-
-        // Add three floats for bi-tangent vector
+        // bi-tangent vectors
         glEnableVertexAttribArray(4);
         glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(float)*m_stride, (char*)(sizeof(float)*11));
 
