@@ -7,15 +7,12 @@ in vec2 v_texCoord; // Import texture coordinates from vertex shader
 in vec3 myNormal; // Import normal data
 
 // ======================= UNIFORM ====================
-// light sources
 uniform vec3 lightColor;
 uniform vec3 lightPos;
 uniform float ambientIntensity;
-// used for computing specular highlights
 uniform mat4 view;
 
 // ======================= OUT ========================
-// The final output color of each 'fragment' from our fragment shader.
 out vec4 FragColor;
 
 void main()

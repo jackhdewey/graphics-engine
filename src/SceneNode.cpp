@@ -43,54 +43,6 @@ SceneNode::~SceneNode(){
 	}
 }
 
-void SceneNode::AddChild(SceneNode* n) {
-	n->m_parent = this;
-	m_children.push_back(n);
-}
-
-void SceneNode::AddChildren(std::vector<Object*>* children) {
-    for (int i = 0; i < children->size(); i++) {
-        SceneNode* tempNode = new SceneNode(children->at(i), this, false);
-        m_children.push_back(tempNode);
-    }
-}
-
-Object* SceneNode::GetObject() {
-    return m_object;
-}
-
-std::vector<SceneNode*>& SceneNode::GetChildren() {
-    return m_children;
-}
-
-SceneNode* SceneNode::GetParent() {
-    return m_parent;
-}
-
-void SceneNode::SetPosition(float x, float y, float z) {
-    m_localTransform.Translate(x, y, z);
-}
-
-void SceneNode::SetOrientation(float theta) {
-    m_localTransform.Rotate(theta, 1.0, 0.0, 0.0);
-}
-
-void SceneNode::SetVelocity(float x, float y, float z) {
-    m_linearVelocity = glm::vec3(x, y, z);
-}
-
-glm::vec3& SceneNode::GetVelocity() {
-    return m_linearVelocity;
-}
-
-Transform& SceneNode::GetLocalTransform(){
-    return m_localTransform;
-}
-
-Transform& SceneNode::GetWorldTransform(){
-    return m_worldTransform;
-}
-
 /**
  * Updates the transformation matrix for current node
  *
@@ -222,4 +174,52 @@ void SceneNode::BouncingBalls() {
             }
         }
     }
+}
+
+void SceneNode::AddChild(SceneNode* n) {
+    n->m_parent = this;
+    m_children.push_back(n);
+}
+
+void SceneNode::AddChildren(std::vector<Object*>* children) {
+    for (int i = 0; i < children->size(); i++) {
+        SceneNode* tempNode = new SceneNode(children->at(i), this, false);
+        m_children.push_back(tempNode);
+    }
+}
+
+SceneNode* SceneNode::GetParent() {
+    return m_parent;
+}
+
+std::vector<SceneNode*>& SceneNode::GetChildren() {
+    return m_children;
+}
+
+Object* SceneNode::GetObject() {
+    return m_object;
+}
+
+void SceneNode::SetPosition(float x, float y, float z) {
+    m_localTransform.Translate(x, y, z);
+}
+
+void SceneNode::SetOrientation(float theta) {
+    m_localTransform.Rotate(theta, 1.0, 0.0, 0.0);
+}
+
+void SceneNode::SetVelocity(float x, float y, float z) {
+    m_linearVelocity = glm::vec3(x, y, z);
+}
+
+glm::vec3& SceneNode::GetVelocity() {
+    return m_linearVelocity;
+}
+
+Transform& SceneNode::GetLocalTransform(){
+    return m_localTransform;
+}
+
+Transform& SceneNode::GetWorldTransform(){
+    return m_worldTransform;
 }

@@ -1,6 +1,6 @@
-//
-// Created by Jack Dewey on 12/3/22.
-//
+/**
+ * Placeholder - will store light class.
+ */
 
 #ifndef LIGHT_HPP
 #define LIGHT_HPP

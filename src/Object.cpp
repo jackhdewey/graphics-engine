@@ -13,9 +13,8 @@ Object::~Object(){}
  */
 void Object::LoadObjectModel(OBJModel* model) {
 
-    std::cout<<"Loading Vertex Data"<<std::endl;
-
     // Load vertex and index data from model
+    std::cout<<"Loading Vertex Data"<<std::endl;
     for (int i = 0; i < model->getVertexData().size(); i += 8) {
         m_geometry.AddVertex8f(model->getVertexData()[i],
                              model->getVertexData()[i + 1],
@@ -28,24 +27,23 @@ void Object::LoadObjectModel(OBJModel* model) {
     }
 
     std::cout<<"Loading Index Data"<<std::endl;
-
     for (int i = 0; i < model->getIndexData().size(); i += 3) {
         m_geometry.MakeTriangle(model->getIndexData()[i],
                                 model->getIndexData()[i + 1],
                                 model->getIndexData()[i + 2]);
     }
 
+    // Consolidate geometry data into a single vector
     std::cout<<"Generating Geometry"<<std::endl;
-
     m_geometry.Gen();
 
-    // Create a layout buffer information
+    // Create VAO, VBO, and IBO on GPU
     m_vertexBufferLayout.CreateNormalBufferLayout(m_geometry.GetBufferDataSize(),
                                                   m_geometry.GetIndicesSize(),
                                                   m_geometry.GetBufferDataPtr(),
                                                   m_geometry.GetIndicesDataPtr());
 
-    // Load our texture
+    // Load texture onto GPU
     if (model->hasTexture()) {
         m_hasTexture = true;
         m_textureDiffuse.LoadTexture(model->getTextureFilePath());
@@ -64,9 +62,9 @@ bool Object::HasTexture() {
 }
 
 /**
- * Load the given texture file
+ * Loads the given texture file.
  *
- * It may be good to think about loading a 'default' texture if none is provided
+ * Note: it may be good to think about loading a 'default' texture if none is provided
  *
  * @param fileName
  */
@@ -77,11 +75,12 @@ void Object::LoadTexture(std::string fileName){
 }
 
 /**
- * Bind to vertex buffer and texture
+ * Binds vertex buffer and texture.
  */
 void Object::Bind(){
-        // Make sure we are updating the correct 'buffers'
+        // Update the current buffers to this object
         m_vertexBufferLayout.Bind();
+        // Update current active texture to this object's texture
         // Diffuse map is 0 by default, but it is good to set it explicitly
         if (m_hasTexture) {
             m_textureDiffuse.Bind(0);
@@ -89,10 +88,9 @@ void Object::Bind(){
 }
 
 /**
- * Render geometry stored in m_vertexBufferLayout
+ * Renders mesh geometry.
  */
 void Object::Render(){
-    // Bind the current VBO and texture to OpenGL
     Bind();
     glDrawElements(GL_TRIANGLES, m_geometry.GetIndicesSize(), GL_UNSIGNED_INT, nullptr);
 }

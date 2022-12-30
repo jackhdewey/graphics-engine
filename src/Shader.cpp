@@ -99,14 +99,6 @@ void Shader::CreateProgram(const std::string& vertexShaderSource, const std::str
     m_programID = program;
 }
 
-void Shader::Bind() const{
-    glUseProgram(m_programID);
-}
-
-void Shader::Unbind() const{
-    glUseProgram(0);
-}
-
 bool Shader::CheckLinkStatus(GLuint programID){                                                                             
     // Retrieve the result of our compilation                                                                                           
     int result;                                                                                                                         
@@ -128,6 +120,14 @@ bool Shader::CheckLinkStatus(GLuint programID){
 
 void Shader::Log(const char* system, const char* message){
     std::cout << "[" << system << "]" << message << "\n";
+}
+
+void Shader::Bind() const{
+    glUseProgram(m_programID);
+}
+
+void Shader::Unbind() const{
+    glUseProgram(0);
 }
 
 // Set a uniform 4x4 matrix in our shader.

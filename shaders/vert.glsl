@@ -28,6 +28,7 @@ void main()
 
     // Transform each fragment into world space (for computing lighting)
     FragPos = vec3(model * vec4(position, 1.0f));
+
     // Pass normal and texture coordinates to the next stage
     v_texCoord = texCoord;
     v_normal = normal;

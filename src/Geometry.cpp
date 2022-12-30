@@ -146,7 +146,7 @@ void Geometry::MakeTriangle(unsigned int vert0, unsigned int vert1, unsigned int
 }
 
 /**
- * Push all of our data into a single vector.
+ * Consolidate all of our geometry data into a single vector.
  */
 void Geometry::Gen(){
     assert((m_vertexPositions.size()/3) == (m_textureCoords.size()/2));
@@ -160,7 +160,7 @@ void Geometry::Gen(){
         // texture information
         m_bufferData.push_back(m_textureCoords[coordsPos*2+0]);
         m_bufferData.push_back(m_textureCoords[coordsPos*2+1]);
-        // Note separate counter because we only have two dimensions
+        // separate counter for texture coords because we only have two dimensions
         coordsPos++;
         // normals
         m_bufferData.push_back(m_normals[i*3+0]);

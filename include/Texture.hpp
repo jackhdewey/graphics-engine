@@ -20,19 +20,17 @@ public:
     Texture();
     // Destructor
     ~Texture();
-	// Loads the texture file and sends it to OpenGL
+	// Loads the texture file and creates VBO on GPU
     void LoadTexture(const std::string filepath);
 	// Bind to the specified texture slot - by default 0
     void Bind(unsigned int slot = 0) const;
     // Unbind texture
     void Unbind();
 private:
-    // Store a unique ID for the texture
+    // Unique ID for this texture
     GLuint m_textureID;
-    // Store whatever image data inside our texture class.
+    // Raw image data for this texture
     Image* m_image;
 };
-
-
 
 #endif

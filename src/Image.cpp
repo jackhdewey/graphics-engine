@@ -87,9 +87,7 @@ void Image::LoadPPM(bool flip){
     }
 }
 
-/**
- * Sets a pixel in our array a specific color
- */
+// Sets a pixel to a specific color
 void Image::SetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b){
   if(x > m_width || y > m_height){
       return;

@@ -19,7 +19,7 @@ Texture::Texture(){
 }
 
 Texture::~Texture(){
-	// Remove our texture from the GPU
+	// Remove texture from the GPU
 	glDeleteTextures(1, &m_textureID);
 
     // Delete texture locally
@@ -39,7 +39,7 @@ void Texture::LoadTexture(const std::string filepath){
     glGenTextures(1, &m_textureID);
     // Bind to the target
     glBindTexture(GL_TEXTURE_2D, m_textureID);
-	// Set up some information about our textures.
+	// Set up some information about our textures
 	// GL_TEXTURE_MIN_FILTER - How texture filters (linearly, etc.)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
@@ -58,11 +58,10 @@ void Texture::LoadTexture(const std::string filepath){
                  m_image->GetPixelDataPtr()); // Here is the raw pixel data
     // Generate a mipmap
     glGenerateMipmap(GL_TEXTURE_2D);
-	// We are done with our texture data, so we can unbind.
+	// We are done with our texture data, so we can unbind
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-// Select the active texture slot that we want to occupy
 void Texture::Bind(unsigned int slot) const{
     glEnable(GL_TEXTURE_2D);
 	glActiveTexture(GL_TEXTURE0+slot);

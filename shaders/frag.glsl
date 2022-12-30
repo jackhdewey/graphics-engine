@@ -17,7 +17,6 @@ uniform mat4 view;
 float specularStrength = 0.5f;
 
 // ======================= OUT ========================
-// The final output color of each 'fragment' from our fragment shader.
 out vec4 FragColor;
 
 void main()
@@ -48,9 +47,9 @@ void main()
     vec3 lighting = diffuse + ambient + specular;
 
     // Combine color and lighting
-    if(gl_FrontFacing){
+    if (gl_FrontFacing) {
         FragColor = vec4(textureColor * lighting, 1.0);
-    }else{
+    } else {
         // Additionally color the back side the same color
         FragColor = vec4(textureColor * lighting, 1.0);
     }

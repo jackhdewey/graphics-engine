@@ -1,9 +1,9 @@
 /** @file Image.hpp
- *  @brief Sets up an OpenGL camera..
+ *  @brief Stores an image as a 2D array of pixels
  *  
- *  More...
+ *  Loads a PPM file and stores its contents in a 2D pixel array.
  *
- *  @author Mike
+ *  @author Mike Shah
  *  @bug No known bugs.
  */
 #ifndef IMAGE_HPP
@@ -36,7 +36,7 @@ public:
         return m_BPP;
     }
 
-    // Set a pixel a particular color in our data
+    // Set a pixel to a particular color
     void SetPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b);
 
     // Display the pixels
