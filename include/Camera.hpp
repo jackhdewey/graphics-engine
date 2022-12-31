@@ -1,10 +1,9 @@
 /** @file Camera.hpp
  *  @brief Sets up an OpenGL camera.
- *  
- *  Sets up an OpenGL Camera. The camera is what
- *  sets up our 'view' matrix.
  *
- *  @author Mike
+ *  The camera sets up our view and projection matrices.
+ *
+ *  @author Mike Shah
  *  @bug No known bugs.
  */
 
@@ -50,14 +49,14 @@ public:
 
 private:
 
-    // Where is our camera positioned
+    // Camera location
     glm::vec3 m_eyePosition;
-    // What direction is the camera looking
+    // Direction the camera is pointed
     glm::vec3 m_viewDirection;
-    // Which direction is 'up' in our world
-    // If you wanted to 'rock' or 'rattle' the camera you might play with modifying this value.
+    // Which direction is 'up'
     glm::vec3 m_upVector;
-    // Store the projection matrix for our camera.
+
+    // Store the projection matrix for our camera
     glm::mat4 m_projectionMatrix;
 
 };

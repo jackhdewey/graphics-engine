@@ -17,8 +17,8 @@ out vec4 FragColor;
 
 void main()
 {
-    float near = 0.1f;
-    float far = 20.0f;
+    float near = 0.2f;
+    float far = 12.0f;
     float depth = (2.0 * near * far) / (far + near - (gl_FragCoord.z * 2.0 - 1.0) * (far - near));
     float illumination = depth / far;
 

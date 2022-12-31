@@ -6,17 +6,15 @@
 #include <iostream>
 
 Camera::Camera(unsigned int screenWidth, unsigned int screenHeight){
-
     // Position us at the origin.
     m_eyePosition = glm::vec3(0.0f, 0.0f, 0.0f);
     // Looking down along the z-axis initially.
     // Remember, this is negative because we are looking 'into' the scene.
     m_viewDirection = glm::vec3(0.0f,0.0f, -1.0f);
-    // For now our upVector always points up along the y-axis
+    // Up vector points along the y-axis
     m_upVector = glm::vec3(0.0f, 1.0f, 0.0f);
     // Set the default projection matrix for our camera
-    m_projectionMatrix = glm::perspective(45.0f, ((float) screenWidth) / ((float) screenHeight), 0.1f, 512.0f);
-
+    m_projectionMatrix = glm::perspective(45.0f, ((float) screenWidth) / ((float) screenHeight), 0.2f, 42.0f);
 }
 
 void Camera::MouseLook(int mouseX, int mouseY){
@@ -34,14 +32,6 @@ void Camera::MoveBackward(float speed){
     m_eyePosition -= speed * m_viewDirection;
 }
 
-void Camera::MoveLeft(float speed){
-    m_eyePosition -= glm::normalize(glm::cross(m_viewDirection, m_upVector)) * speed;
-}
-
-void Camera::MoveRight(float speed){
-    m_eyePosition += glm::normalize(glm::cross(m_viewDirection, m_upVector)) * speed;
-}
-
 void Camera::MoveUp(float speed){
     m_eyePosition += speed * m_upVector;
 }
@@ -50,7 +40,14 @@ void Camera::MoveDown(float speed){
     m_eyePosition -= speed * m_upVector;
 }
 
-// Set the position for the camera
+void Camera::MoveLeft(float speed){
+    m_eyePosition -= glm::normalize(glm::cross(m_viewDirection, m_upVector)) * speed;
+}
+
+void Camera::MoveRight(float speed){
+    m_eyePosition += glm::normalize(glm::cross(m_viewDirection, m_upVector)) * speed;
+}
+
 void Camera::SetCameraEyePosition(float x, float y, float z){
     m_eyePosition.x = x;
     m_eyePosition.y = y;
@@ -82,7 +79,6 @@ float Camera::GetViewZDirection(){
 }
 
 glm::mat4 Camera::GetWorldToViewMatrix() const {
-    // Think about the second argument and why that is set up as it is.
     return glm::lookAt( m_eyePosition,
                         m_eyePosition + m_viewDirection,
                         m_upVector);

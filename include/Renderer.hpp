@@ -4,11 +4,9 @@
  * 	The renderer is responsible for drawing the entire scene.
  * 	It contains a pointer to the root of the scene graph and a camera.
  *
- *  @author Mike
+ *  @author Mike Shah
  *  @bug No known bugs.
  */
-
-// TODO: Relocate camera to scene graph
 
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
@@ -28,7 +26,7 @@ class Renderer {
 public:
 
     /**
-     * Initialize the renderer
+     * Constructor
      *
      * @param w the window width
      * @param h the window height
@@ -36,27 +34,31 @@ public:
     Renderer(unsigned int w, unsigned int h);
 
     /**
-     * Free up memory used for camera(s)
+     * Destructor
      */
     ~Renderer();
 
     /**
-     * Update the scene tree
+     * Updates the scene tree.
      */
     void Update(bool pause);
 
     /**
-     * Render the scene.
+     * Renders the scene.
      */
     void Render();
 
     /**
-     * Returns the camera at an index
+     * Returns the camera.
      */
     Camera*& GetCamera(){
         return m_camera;
     }
 
+    /**
+     * Sets the root to the given scene node.
+     * @param root
+     */
     void SetRoot(SceneNode* root) {
         m_root = root;
     }
@@ -64,8 +66,6 @@ public:
 protected:
 
     SceneNode* m_root;
-
-    // One camera per renderer
     Camera* m_camera;
 
 private:
