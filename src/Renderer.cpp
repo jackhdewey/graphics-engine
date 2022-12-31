@@ -3,12 +3,6 @@
 
 #include "Renderer.hpp"
 
- /**
-  * Initialize the renderer
-  *
-  * @param w the window width
-  * @param h the window height
-  */
 Renderer::Renderer(unsigned int w, unsigned int h){
 
     // Store height and width
@@ -16,7 +10,7 @@ Renderer::Renderer(unsigned int w, unsigned int h){
     m_screenHeight = h;
 
     // Create one camera per render
-    // (Alternatively, you could create a camera as a scene node then attach at various levels)
+    // Alternatively, we could create a camera as a scene node
     Camera* defaultCamera = new Camera(w, h);
 
     // Add our single camera
@@ -24,27 +18,24 @@ Renderer::Renderer(unsigned int w, unsigned int h){
 
 }
 
-/**
- * Free up memory used for camera(s)
- */
 Renderer::~Renderer(){
-    // Delete our camera
     delete m_camera;
 }
 
-/**
- * Update the scene tree
+/*
+void CreateProgram(const std::string& vertSource, const std::string& fragSource) {
+    std::string vertexShader = m_shader->LoadShader(vertSource);
+    std::string fragmentShader = m_shader->LoadShader(fragSource);
+    m_shader->CreateProgram(vertexShader, fragmentShader);
+}
  */
+
 void Renderer::Update(bool pause){
     if (m_root != nullptr) {
-        // We only have one camera
         m_root->Update(m_camera, pause);
     }
 }
 
-/**
- * Set up our depth and color buffers then render the scene.
- */
 void Renderer::Render() {
 
     // Tell OpenGL to create a depth (or 'Z') buffer

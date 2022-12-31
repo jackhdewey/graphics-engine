@@ -6,7 +6,6 @@
 Shader::Shader(){}
 
 Shader::~Shader(){
-	// Deallocate Program
 	glDeleteProgram(m_programID);
 }
 

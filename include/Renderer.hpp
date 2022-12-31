@@ -2,7 +2,7 @@
  *  @brief Renderer is responsible for drawing.
  *
  * 	The renderer is responsible for drawing the entire scene.
- * 	It contains a pointer to the root of the scene graph and a camera.
+ * 	It contains a camera and a pointer to the root of the scene graph.
  *
  *  @author Mike Shah
  *  @bug No known bugs.
@@ -15,6 +15,7 @@
 
 #include "SceneNode.hpp"
 #include "Camera.hpp"
+#include "Shader.hpp"
 
 #include <vector>
 
@@ -49,13 +50,6 @@ public:
     void Render();
 
     /**
-     * Returns the camera.
-     */
-    Camera*& GetCamera(){
-        return m_camera;
-    }
-
-    /**
      * Sets the root to the given scene node.
      * @param root
      */
@@ -63,10 +57,26 @@ public:
         m_root = root;
     }
 
+    /**
+     * Generates a shader program for this renderer.
+     *
+     * @param vertSource
+     * @param fragSource
+     */
+    // void CreateProgram(const std::string& vertSource, const std::string& fragSource);
+
+    /**
+     * Returns the camera.
+     */
+    Camera*& GetCamera(){
+        return m_camera;
+    }
+
 protected:
 
-    SceneNode* m_root;
     Camera* m_camera;
+    // Shader* m_shader;
+    SceneNode* m_root;
 
 private:
 

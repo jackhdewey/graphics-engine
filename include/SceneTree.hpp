@@ -52,11 +52,6 @@ public:
      */
     void Update(Camera*& camera, bool pause);
 
-    /**
-     * Render the entire scene
-     */
-    void Render();
-
 private:
 
     // Private constructor
@@ -64,6 +59,9 @@ private:
 
     // The root of the tree
     SceneNode* m_root;
+
+    // Renderer for this scene
+    Renderer* m_renderer;
 
 };
 

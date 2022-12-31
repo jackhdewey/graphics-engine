@@ -75,9 +75,9 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) {
 	// SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN); // Uncomment to enable extra debug support!
 	GetOpenGLVersionInfo();
 
-    // Generate a rendering context and initialize the scene
-    m_renderer = new Renderer(w,h);
+    // Initialize the scene and generate a rendering context
     InitScene();
+    InitRender(w, h);
 }
 
 SDLGraphicsProgram::~SDLGraphicsProgram(){
@@ -114,6 +114,11 @@ void SDLGraphicsProgram::InitScene() {
     sphere_node->SetPosition(0.0, 8.0, 0.0);
 
     m_sceneTree = &SceneTree::Instance(floor_node);
+}
+
+void SDLGraphicsProgram::InitRender(int w, int h) {
+    m_renderer = new Renderer(w,h);
+    // m_renderer->CreateProgram("./shaders/vert.glsl", "./shaders/depthmap.glsl");
     m_renderer->SetRoot(m_sceneTree->GetRoot());
 }
 
@@ -197,7 +202,7 @@ void SDLGraphicsProgram::Loop(){
         }
 
         // Update our scene through our renderer
-        m_renderer->Update(pause);
+        m_sceneTree->Update(m_renderer->GetCamera(), pause);
 
         // Render our scene using our selected renderer
         m_renderer->Render();

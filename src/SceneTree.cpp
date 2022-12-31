@@ -3,19 +3,11 @@
 #include <string>
 #include <iostream>
 
-/**
- * Retrieve the singleton instance of scene tree
- *
- * @param rootObj
- * @return a reference to the created scene tree
- */
 SceneTree::SceneTree(SceneNode* rootNode){
     m_root = rootNode;
 }
 
-SceneTree::~SceneTree() {
-
-}
+SceneTree::~SceneTree() {}
 
 SceneTree& SceneTree::Instance(SceneNode* rootNode){
     static SceneTree* instance = new SceneTree(rootNode);
@@ -24,6 +16,10 @@ SceneTree& SceneTree::Instance(SceneNode* rootNode){
 
 SceneNode* SceneTree::GetRoot() {
     return m_root;
+}
+
+void SceneTree::Update(Camera*& camera, bool pause) {
+    m_root->Update(camera, pause);
 }
 
 void SceneTree::RandomizeLocations() {
@@ -41,15 +37,6 @@ void SceneTree::RandomizeDirections() {
         children.at(i)->SetVelocity((float(rand())/float((RAND_MAX)) * 1.0 - 0.5),
                                     (float(rand())/float((RAND_MAX)) * 1.0 - 0.5),
                                     (float(rand())/float((RAND_MAX)) * 1.0 - 0.5));
-
     }
-}
-
-void SceneTree::Update(Camera*& camera, bool pause) {
-    m_root->Update(camera, pause);
-}
-
-void SceneTree::Render() {
-    m_root->Render();
 }
 

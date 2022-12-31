@@ -55,6 +55,11 @@ public:
     void InitScene();
 
     /**
+     * Set up the renderer.
+     */
+     void InitRender(int w, int h);
+
+    /**
      * Main program loop
      */
     void Loop();
