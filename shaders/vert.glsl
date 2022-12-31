@@ -26,11 +26,11 @@ void main()
     // Transform each vertex into screen space
     gl_Position = projection * view * model * vec4(position, 1.0f);
 
-    // Transform each fragment into world space (for computing lighting)
+    // Transform each vertex position and normal into world space (for computing lighting)
     FragPos = vec3(model * vec4(position, 1.0f));
+    v_normal = vec3(model * vec4(normal, 1.0f));
 
-    // Pass normal and texture coordinates to the next stage
+    // Pass texture coordinates to the next stage
     v_texCoord = texCoord;
-    v_normal = normal;
 }
 // ==================================================================

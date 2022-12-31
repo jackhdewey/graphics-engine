@@ -53,13 +53,16 @@ void SceneNode::Update(Camera*& camera, bool pause){
     // Select program
     m_shader.Bind();
 
+    // Send camera information
+    m_shader.SetUniform3f("cameraPosition", camera->GetEyeXPosition(),
+                                            camera->GetEyeYPosition(),
+                                            camera->GetEyeZPosition());
+
     // Send light information
+    m_shader.SetUniform3f("lightPos", 0.0f, 10.0f, 0.0f);
     m_shader.SetUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
-    m_shader.SetUniform3f("lightPos",
-                          camera->GetEyeXPosition(),
-                          camera->GetEyeYPosition(),
-                          camera->GetEyeZPosition());
     m_shader.SetUniform1f("ambientIntensity", 0.6f);
+    m_shader.SetUniform1f("specularStrength", 0.5f);
 
     // Send the MVP Matrix
     m_shader.SetUniformMatrix4fv("model", &m_localTransform.GetInternalMatrix()[0][0]);
