@@ -7,10 +7,11 @@ in vec2 v_texCoord; // Import texture coordinates from vertex shader
 in vec3 v_normal; // Import normal data
 
 // ======================= UNIFORMS ====================
+// Texture
 uniform sampler2D u_DiffuseMap;
-// Camera information
+// Camera
 uniform vec3 cameraPosition;
-// Lighting information
+// Lighting
 uniform vec3 lightPosition;
 uniform vec3 lightColor;
 uniform float ambientIntensity;
@@ -36,7 +37,7 @@ void main()
     float diffImpact = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diffImpact * lightColor;
 
-    // (3) Compute Specular lighting
+    // (3) Compute specular light
     float specImpact = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec3 specular = specularStrength * specImpact * lightColor;
 

@@ -9,15 +9,12 @@ layout(location=3)in vec3 tangent;
 layout(location=4)in vec3 bitangent;
 
 // ======================= UNIFORMS ====================
-// Transformation matrices
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
 // ======================= OUT ========================
-// Fragment position in world space
 out vec3 FragPos;
-// Texture coordinates and vertex normals
 out vec2 v_texCoord;
 out vec3 v_normal;
 
@@ -26,7 +23,7 @@ void main()
     // Transform each vertex into screen space
     gl_Position = projection * view * model * vec4(position, 1.0f);
 
-    // Transform each vertex position and normal into world space (for computing lighting)
+    // Transform vertex position and normal into world space for lighting
     FragPos = vec3(model * vec4(position, 1.0f));
     v_normal = vec3(model * vec4(normal, 1.0f));
 

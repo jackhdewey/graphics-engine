@@ -3,8 +3,6 @@
 #include <string>
 #include <iostream>
 
-// TODO: Relocate shader to scene graph
-
 SceneNode::SceneNode(Object* object, SceneNode* parent, bool wireframe) {
     // Store the object
     m_object = object;
@@ -43,11 +41,6 @@ SceneNode::~SceneNode(){
 	}
 }
 
-/**
- * Updates the transformation matrix for current node
- *
- * @param camera
- */
 void SceneNode::Update(Camera*& camera, bool pause){
 
     // Select program
@@ -75,9 +68,6 @@ void SceneNode::Update(Camera*& camera, bool pause){
     }
 }
 
-/**
- * Draws the contents of the current node
- */
 void SceneNode::Render(){
 
     // Select program

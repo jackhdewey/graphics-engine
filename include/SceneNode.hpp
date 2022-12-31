@@ -24,7 +24,7 @@ class SceneNode {
 public:
 
     /**
-     * Constructor creates a node containing the given object
+     * Constructor creates a node containing the given object.
      *
      * @param object the object to be stored at this node
      * @param parent the parent node for this node
@@ -33,7 +33,7 @@ public:
     SceneNode(Object* object, SceneNode* parent, bool wireframe);
 
     /**
-     * Constructor creates a node containing the given object
+     * Constructor creates a node containing the given object.
      *
      * @param object the object to be stored at this node
      * @param wireframe
@@ -41,89 +41,114 @@ public:
     SceneNode(Object* object, bool wireframe);
 
     /**
-     * Destructor frees memory associated with this node and each of its children
+     * Destructor frees memory associated with this node and each of its children.
      */
     ~SceneNode();
 
     /**
-     * Retrieve the object stored at this node
+     * Retrieve the object stored at this node.
      */
     Object* GetObject();
 
     /**
-     * Return this node's parent
+     * Return this node's parent.
      */
     SceneNode* GetParent();
 
     /**
-     * Add a child node to this node
+     * Add a child node to this node.
      */
     void AddChild(SceneNode* n);
 
     /**
-     * Add multiple child nodes to this node
+     * Add multiple child nodes to this node.
      */
     void AddChildren(std::vector<Object*>* children);
 
     /**
-     * Return the children of this node
+     * Return the children of this node.
      */
     std::vector<SceneNode*>& GetChildren();
 
-    // Set the position for this node
+    /**
+     * Manually set the x,y,z position of this node.
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
     void SetPosition(float x, float y, float z);
 
-    // Set the orientation of this node
+    /**
+     * Manually set the orientation of this node
+     */
     void SetOrientation(float theta);
 
-    // Set the movement direction for this node.
+    /**
+     * Set the movement direction for this node.
+     */
     void SetVelocity(float x, float y, float z);
 
-    // Get the movement direction for this node
+    /**
+     * Return the velocity vector for this node.
+     * @return
+     */
     glm::vec3& GetVelocity();
 
-    // Returns the local transformation transform
+    /**
+     * Returns the local (relative to parent) transform for this node.
+     * @return
+     */
     Transform& GetLocalTransform();
 
-    // Returns a SceneNode's world transform
+    /**
+     * Returns the world (relative to entire scene) transform for this node.
+     * @return
+     */
     Transform& GetWorldTransform();
 
-    // Updates the current SceneNode
+    /**
+     * Update this scene nodes (and all its children).
+     *
+     * @param camera
+     * @param pause
+     */
     void Update(Camera*& camera, bool pause);
 
-    // Draws the current SceneNode
+    /**
+     * Draws the object stored at this node.
+     */
     void Render();
 
-    // Runs 'physics' for a bouncing balls simulation
+    /**
+     * Runs a dedicated simulation of bouncing balls in a rotating cube.
+     */
     void BouncingBalls();
 
 protected:
 
-    // Parent
     SceneNode* m_parent;
 
 private:
 
-    // The object stored in this scene node
     Object* m_object;
 
-    // Each SceneNode's local transform
+    // Transform relative to parent
     Transform m_localTransform;
-    // We additionally can store the world transform
+    // Transform relative to global scene (i.e. root)
     Transform m_worldTransform;
 
-    // This node's current linear velocity
     glm::vec3 m_linearVelocity;
-    // This node's current angular velocity
     float m_angularVelocity;
 
-    // Bool indicating whether we want to render in wireframe mode
+    // Boolean indicating whether we want to render in wireframe mode
     bool m_wireframe;
-    // Shader for this scene
+    // Shader for this node
     Shader m_shader;
 
     // A pointer to a vector containing pointers to the children of this node
     std::vector<SceneNode*> m_children;
+
 };
 
 #endif
