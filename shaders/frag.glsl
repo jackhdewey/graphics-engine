@@ -34,13 +34,13 @@ out vec4 FragColor;
 
 void main()
 {
-    vec3 textureColor = texture(u_DiffuseMap, v_texCoord).rgb;
+    vec3 textureColor = texture(u_DiffuseMap, TexCoords).rgb;
 
     // (1) Compute ambient light
     vec3 ambient = ambientIntensity * lightColor;
 
     // (2) Compute lighting geometry
-    vec3 normal = normalize(v_normal);
+    vec3 normal = normalize(FragNormal);
     vec3 lightDir = normalize(lightPosition - FragPos);
     vec3 reflectDir = reflect(-lightDir, normal);
     vec3 viewDir = normalize(cameraPosition - FragPos);
