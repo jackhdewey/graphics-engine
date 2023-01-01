@@ -2,9 +2,9 @@
 #version 330 core
 
 // ======================= IN =========================
-in vec3 FragPos; // Import the fragment position
-in vec2 v_texCoord; // Import texture coordinates from vertex shader
-in vec3 v_normal; // Import normal data
+in vec3 FragPos; // Import fragment position
+in vec2 FragNormal; // Import fragment normal
+in vec3 TexCoords; // Import texture coordinates
 
 // ======================= UNIFORMS ====================
 // Texture
@@ -16,6 +16,18 @@ uniform vec3 lightPosition;
 uniform vec3 lightColor;
 uniform float ambientIntensity;
 uniform float specularStrength;
+
+struct Light {
+    vec3 position;
+    vec3 color;
+
+    float ambientIntensity;
+    float specularStrength;
+
+    float constant;
+    float linear;
+    float quadratic;
+};
 
 // ======================= OUT ========================
 out vec4 FragColor;

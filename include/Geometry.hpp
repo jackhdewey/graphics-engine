@@ -50,7 +50,7 @@ private:
 	std::vector<float> m_textureCoords;
 	std::vector<float> m_normals;
 	std::vector<float> m_tangents;
-	std::vector<float> m_biTangents;
+	std::vector<float> m_bitangents;
 
     // all the information that should be sent to the Vertex Buffer Object
     std::vector<float> m_bufferData;
