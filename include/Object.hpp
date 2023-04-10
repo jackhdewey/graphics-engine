@@ -44,20 +44,17 @@ public:
 
 protected:
 
+    // Helper method for when we are ready to draw or update our object
+    void Bind();
+
     // Geometry data for this object
     Geometry m_geometry;
-
     // Vertex buffer for this object
     VertexBufferLayout m_vertexBufferLayout;
-
-    // Indicates whether this object has a texture
-    bool m_hasTexture;
-
     // Stores the object's texture data
     Texture m_textureDiffuse;
-
-	// Helper method for when we are ready to draw or update our object
-	void Bind();
+    // Indicates whether this object has a texture
+    bool m_hasTexture;
 
 };
 

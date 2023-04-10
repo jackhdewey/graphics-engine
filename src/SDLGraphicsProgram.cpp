@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <fstream>
 
 SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) {
 
@@ -98,27 +97,27 @@ bool SDLGraphicsProgram::InitGL(){
 
 void SDLGraphicsProgram::InitScene() {
     Object* floor = new Object();
-    OBJModel* model = new OBJModel("./objects/base_surface/base_surface.obj");
+    OBJModel* model = new OBJModel("../objects/base_surface/base_surface.obj");
     floor->LoadObjectModel(model);
     SceneNode* floor_node = new SceneNode(floor, false);
 
+    m_sceneTree = &SceneTree::Instance(floor_node);
+
     Object* platform = new Object();
-    model = new OBJModel("./objects/platform_one/platform_one.obj");
+    model = new OBJModel("../objects/platform_one/platform_one.obj");
     platform->LoadObjectModel(model);
     SceneNode* platform_node = new SceneNode(platform, floor_node, false);
-    platform_node->SetPosition(0.0, 5.0, 0.0);
-    platform_node->SetOrientation(.5);
 
     Object* sphere = new Sphere();
     SceneNode* sphere_node = new SceneNode(sphere, floor_node, false);
-    sphere_node->SetPosition(0.0, 8.0, 0.0);
 
-    m_sceneTree = &SceneTree::Instance(floor_node);
+    platform_node->SetPosition(0.0, 5.0, 0.0);
+    platform_node->SetOrientation(.5);
+    sphere_node->SetPosition(0.0, 8.0, 0.0);
 }
 
 void SDLGraphicsProgram::InitRender(int w, int h) {
     m_renderer = new Renderer(w,h);
-    // m_renderer->CreateProgram("./shaders/vert.glsl", "./shaders/depthmap.glsl");
     m_renderer->SetRoot(m_sceneTree->GetRoot());
 }
 

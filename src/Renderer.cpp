@@ -11,24 +11,12 @@ Renderer::Renderer(unsigned int w, unsigned int h){
 
     // Create one camera per render
     // Alternatively, we could create a camera as a scene node
-    Camera* defaultCamera = new Camera(w, h);
-
-    // Add our single camera
-    m_camera = defaultCamera;
-
+    m_camera = new Camera(w, h);
 }
 
 Renderer::~Renderer(){
     delete m_camera;
 }
-
-/*
-void CreateProgram(const std::string& vertSource, const std::string& fragSource) {
-    std::string vertexShader = m_shader->LoadShader(vertSource);
-    std::string fragmentShader = m_shader->LoadShader(fragSource);
-    m_shader->CreateProgram(vertexShader, fragmentShader);
-}
- */
 
 void Renderer::Update(bool pause){
     if (m_root != nullptr) {

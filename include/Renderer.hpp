@@ -58,14 +58,6 @@ public:
     }
 
     /**
-     * Generates a shader program for this renderer.
-     *
-     * @param vertSource
-     * @param fragSource
-     */
-    // void CreateProgram(const std::string& vertSource, const std::string& fragSource);
-
-    /**
      * Returns the camera.
      */
     Camera*& GetCamera(){
@@ -75,7 +67,6 @@ public:
 protected:
 
     Camera* m_camera;
-    // Shader* m_shader;
     SceneNode* m_root;
 
 private:

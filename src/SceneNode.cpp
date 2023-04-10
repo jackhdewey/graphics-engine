@@ -4,15 +4,15 @@
 #include <iostream>
 
 SceneNode::SceneNode(Object* object, SceneNode* parent, bool wireframe) {
-    // Store the object
+
     m_object = object;
     m_parent = parent;
     parent->AddChild(this);
     m_angularVelocity = 0.01f;
     m_wireframe = wireframe;
 
-    std::string vertexShader = m_shader.LoadShader("./shaders/vert.glsl");
-    std::string fragmentShader = m_shader.LoadShader("./shaders/depthmap.glsl");
+    std::string vertexShader = m_shader.LoadShader("../shaders/vert.glsl");
+    std::string fragmentShader = m_shader.LoadShader("../shaders/depthmap.glsl");
     m_shader.CreateProgram(vertexShader, fragmentShader);
     if (m_object->HasTexture()) {
         m_shader.SetUniform1i("u_DiffuseMap", 0);
@@ -21,14 +21,13 @@ SceneNode::SceneNode(Object* object, SceneNode* parent, bool wireframe) {
 
 SceneNode::SceneNode(Object* object, bool wireframe) {
 
-    // Store the object
     m_object = object;
     m_parent = nullptr;
     m_angularVelocity = 0.01f;
     m_wireframe = wireframe;
 
-    std::string vertexShader = m_shader.LoadShader("./shaders/vert.glsl");
-    std::string fragmentShader = m_shader.LoadShader("./shaders/depthmap.glsl");
+    std::string vertexShader = m_shader.LoadShader("../shaders/vert.glsl");
+    std::string fragmentShader = m_shader.LoadShader("../shaders/depthmap.glsl");
     m_shader.CreateProgram(vertexShader, fragmentShader);
     if (m_object->HasTexture()) {
         m_shader.SetUniform1i("u_DiffuseMap", 0);
@@ -43,13 +42,18 @@ SceneNode::~SceneNode(){
 
 void SceneNode::Update(Camera*& camera, bool pause){
 
-    // Select program
+    // Bind to this node's shader
     m_shader.Bind();
 
-    // Send camera information
+    // Send camera position
     m_shader.SetUniform3f("cameraPosition", camera->GetEyeXPosition(),
                                             camera->GetEyeYPosition(),
                                             camera->GetEyeZPosition());
+
+    // Send the MVP Matrix
+    m_shader.SetUniformMatrix4fv("model", &m_localTransform.GetInternalMatrix()[0][0]);
+    m_shader.SetUniformMatrix4fv("view", &camera->GetWorldToViewMatrix()[0][0]);
+    m_shader.SetUniformMatrix4fv("projection", &camera->GetProjectionMatrix()[0][0]);
 
     // Send light information
     m_shader.SetUniform3f("lightPos", 0.0f, 10.0f, 0.0f);
@@ -57,12 +61,7 @@ void SceneNode::Update(Camera*& camera, bool pause){
     m_shader.SetUniform1f("ambientIntensity", 0.6f);
     m_shader.SetUniform1f("specularStrength", 0.5f);
 
-    // Send the MVP Matrix
-    m_shader.SetUniformMatrix4fv("model", &m_localTransform.GetInternalMatrix()[0][0]);
-    m_shader.SetUniformMatrix4fv("view", &camera->GetWorldToViewMatrix()[0][0]);
-    m_shader.SetUniformMatrix4fv("projection", &camera->GetProjectionMatrix()[0][0]);
-
-    // Iterate through all the children
+    // Update child node's
     for (int i = 0; i < m_children.size(); i++) {
         m_children[i]->Update(camera, pause);
     }
@@ -70,7 +69,7 @@ void SceneNode::Update(Camera*& camera, bool pause){
 
 void SceneNode::Render(){
 
-    // Select program
+    // Bind to this node's shader
     m_shader.Bind();
 
     if (m_wireframe) {
@@ -83,16 +82,64 @@ void SceneNode::Render(){
 
     // Render our object
     if (m_object != nullptr) {
-
         m_object->Render();
+    }
 
-        // Also call the render routine for any 'child nodes'.
-        for (int i = 0; i < m_children.size(); i++) {
-            m_children[i]->Render();
-        }
+    // Also render any 'child nodes'
+    for (int i = 0; i < m_children.size(); i++) {
+        m_children[i]->Render();
     }
 }
 
+void SceneNode::AddChild(SceneNode* n) {
+    n->m_parent = this;
+    m_children.push_back(n);
+}
+
+void SceneNode::AddChildren(std::vector<Object*>* children) {
+    for (int i = 0; i < children->size(); i++) {
+        SceneNode* tempNode = new SceneNode(children->at(i), this, false);
+        m_children.push_back(tempNode);
+    }
+}
+
+SceneNode* SceneNode::GetParent() {
+    return m_parent;
+}
+
+std::vector<SceneNode*>& SceneNode::GetChildren() {
+    return m_children;
+}
+
+Object* SceneNode::GetObject() {
+    return m_object;
+}
+
+void SceneNode::SetPosition(float x, float y, float z) {
+    m_localTransform.Translate(x, y, z);
+}
+
+void SceneNode::SetOrientation(float theta) {
+    m_localTransform.Rotate(theta, 1.0, 0.0, 0.0);
+}
+
+void SceneNode::SetVelocity(float x, float y, float z) {
+    m_linearVelocity = glm::vec3(x, y, z);
+}
+
+glm::vec3& SceneNode::GetVelocity() {
+    return m_linearVelocity;
+}
+
+Transform& SceneNode::GetLocalTransform(){
+    return m_localTransform;
+}
+
+Transform& SceneNode::GetWorldTransform(){
+    return m_worldTransform;
+}
+
+// A built-in function for performing a 'bouncing ball' simulation
 void SceneNode::BouncingBalls() {
 
     bool pause = false;
@@ -167,52 +214,4 @@ void SceneNode::BouncingBalls() {
             }
         }
     }
-}
-
-void SceneNode::AddChild(SceneNode* n) {
-    n->m_parent = this;
-    m_children.push_back(n);
-}
-
-void SceneNode::AddChildren(std::vector<Object*>* children) {
-    for (int i = 0; i < children->size(); i++) {
-        SceneNode* tempNode = new SceneNode(children->at(i), this, false);
-        m_children.push_back(tempNode);
-    }
-}
-
-SceneNode* SceneNode::GetParent() {
-    return m_parent;
-}
-
-std::vector<SceneNode*>& SceneNode::GetChildren() {
-    return m_children;
-}
-
-Object* SceneNode::GetObject() {
-    return m_object;
-}
-
-void SceneNode::SetPosition(float x, float y, float z) {
-    m_localTransform.Translate(x, y, z);
-}
-
-void SceneNode::SetOrientation(float theta) {
-    m_localTransform.Rotate(theta, 1.0, 0.0, 0.0);
-}
-
-void SceneNode::SetVelocity(float x, float y, float z) {
-    m_linearVelocity = glm::vec3(x, y, z);
-}
-
-glm::vec3& SceneNode::GetVelocity() {
-    return m_linearVelocity;
-}
-
-Transform& SceneNode::GetLocalTransform(){
-    return m_localTransform;
-}
-
-Transform& SceneNode::GetWorldTransform(){
-    return m_worldTransform;
 }

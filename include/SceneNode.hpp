@@ -127,27 +127,29 @@ public:
 
 protected:
 
+    // The parent of this node
     SceneNode* m_parent;
 
 private:
 
-    Object* m_object;
+    // Vector containing pointers to the children of this node
+    std::vector<SceneNode*> m_children;
 
-    // Transform relative to parent
+    // Transform (relative to parent)
     Transform m_localTransform;
-    // Transform relative to global scene (i.e. root)
+    // Transform (relative to scene - i.e. the root)
     Transform m_worldTransform;
 
+    // Kinematic data for this node
     glm::vec3 m_linearVelocity;
     float m_angularVelocity;
 
+    // Mesh stored at this node
+    Object* m_object;
     // Boolean indicating whether we want to render in wireframe mode
     bool m_wireframe;
     // Shader for this node
     Shader m_shader;
-
-    // A pointer to a vector containing pointers to the children of this node
-    std::vector<SceneNode*> m_children;
 
 };
 

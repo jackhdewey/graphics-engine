@@ -3,8 +3,7 @@ import os
 import platform
 
 # (1)==================== COMMON CONFIGURATION OPTIONS ======================= #
-COMPILER="g++ -std=c++17"   # The compiler we want to use 
-                                #(You may try g++ if you have trouble)
+COMPILER="g++ -std=c++17"   # The compiler we want to use
 SOURCE="./src/*.cpp"    # Where the source code lives
 EXECUTABLE="project"        # Name of the final executable
 # ======================= COMMON CONFIGURATION OPTIONS ======================= #
@@ -44,14 +43,10 @@ print("========================================================================"
 os.system(compileString)
 # ========================= Building the Executable ========================== #
 
-
 # Why am I not using Make?
 # 1.)   I want total control over the system. 
-#       Occassionally I want to have some logic
-#       in my compilation process (like searching for missing files).
-# 2.)   Realistically our projects are 'small' enough 
-#       this will not matter.
-# 3.)   Feel free to implement your own make files or autogenerate it from this
-#       script
+#       Occasionally I want to have some logic in my compilation process (like searching for missing files).
+# 2.)   Realistically our projects are 'small' enough this will not matter.
+# 3.)   Feel free to implement your own make files or autogenerate it from this script
 # 4.)   It is handy to know Python
 

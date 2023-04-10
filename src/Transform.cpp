@@ -66,17 +66,13 @@ Transform& Transform::operator=(const Transform& t) {
 // This code probably needs optimization (lots of new objects on the stack!)
 Transform operator*(const Transform& lhs, const Transform& rhs){
     Transform result;
-
     result.m_modelTransformMatrix = lhs.GetInternalMatrix() * rhs.GetInternalMatrix();
-
     return result;
 }
 
 // Transform Addition
 Transform operator+(const Transform& lhs, const Transform& rhs){
     Transform result;
-
     result.m_modelTransformMatrix = lhs.GetInternalMatrix() + rhs.GetInternalMatrix();
-
     return result;
 }
