@@ -3,8 +3,6 @@
 #include "glm/gtx/transform.hpp"
 #include "glm/gtx/rotate_vector.hpp"
 
-#include <iostream>
-
 Camera::Camera(unsigned int screenWidth, unsigned int screenHeight){
     // Position us at the origin.
     m_eyePosition = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -15,6 +13,18 @@ Camera::Camera(unsigned int screenWidth, unsigned int screenHeight){
     m_upVector = glm::vec3(0.0f, 1.0f, 0.0f);
     // Set the default projection matrix for our camera
     m_projectionMatrix = glm::perspective(45.0f, ((float) screenWidth) / ((float) screenHeight), 0.2f, 42.0f);
+}
+
+Camera::Camera(unsigned int w, unsigned int h, glm::vec3 position, glm::vec3 direction, glm::vec3 up){
+    // Position us at the origin.
+    m_eyePosition = position;
+    // Looking down along the z-axis initially.
+    // Remember, this is negative because we are looking 'into' the scene.
+    m_viewDirection = direction;
+    // Up vector points along the y-axis
+    m_upVector = up;
+    // Set the default projection matrix for our camera
+    m_projectionMatrix = glm::perspective(45.0f, ((float) w) / ((float) h), 0.2f, 42.0f);
 }
 
 void Camera::MouseLook(int mouseX, int mouseY){

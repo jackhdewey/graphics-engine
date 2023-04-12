@@ -19,6 +19,8 @@ class Camera{
 public:
 	// Constructor
     Camera(unsigned int screenWidth, unsigned int screenHeight);
+    // Alternative constructor
+    Camera(unsigned int w, unsigned int h, glm::vec3 position, glm::vec3 direction, glm::vec3 up);
     // Orient (rotate) the camera
     void MouseLook(int mouseX, int mouseY);
     // Translate the camera in space

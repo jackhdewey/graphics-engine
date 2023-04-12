@@ -11,7 +11,7 @@
 
 #include <fstream>
 #include <iostream>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <memory>
 
 Texture::Texture(){

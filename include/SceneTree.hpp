@@ -60,9 +60,6 @@ private:
     // The root of the tree
     SceneNode* m_root;
 
-    // Renderer for this scene
-    Renderer* m_renderer;
-
 };
 
 #endif

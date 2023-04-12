@@ -3,8 +3,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(graphics-engine)
 
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
-add_executable(graphics-engine main.cpp ${SOURCE_FILES})
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/src/Objects/*.cpp ${CMAKE_SOURCE_DIR}/src/Scene/*.cpp ${CMAKE_SOURCE_DIR}/src/Rendering/*.cpp)
+add_executable(graphics-engine src/main.cpp ${SOURCE_FILES})
 target_include_directories(graphics-engine PUBLIC include)
 
 target_include_directories(graphics-engine PUBLIC include/glad)

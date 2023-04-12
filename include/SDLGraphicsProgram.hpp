@@ -20,11 +20,10 @@
 #endif
 
 #include "Renderer.hpp"
-#include "ObjectManager.hpp"
 #include "SceneTree.hpp"
 
 /**
- * This class sets up a full graphics program using SDL
+ * This class contains an SDL graphics program
  */
 class SDLGraphicsProgram{
 public:
@@ -47,17 +46,17 @@ public:
      *
      * @return a boolean
      */
-    bool InitGL();
+    bool InitGL(std::stringstream& errorStream);
+
+    /**
+     * Set up the renderer.
+     */
+    void InitRender(int w, int h);
 
     /**
      * Set up the initial scene.
      */
     void InitScene();
-
-    /**
-     * Set up the renderer.
-     */
-     void InitRender(int w, int h);
 
     /**
      * Main program loop
@@ -82,8 +81,6 @@ private:
     // OpenGL context
     SDL_GLContext m_openGLContext;
 
-    // Object manager stores the objects making up this scene
-    ObjectManager* m_objectManager;
     // The scene tree stores the relationships between objects in this scene
     SceneTree* m_sceneTree;
     // The Renderer responsible for drawing objects in OpenGL

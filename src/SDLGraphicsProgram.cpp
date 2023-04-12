@@ -1,4 +1,6 @@
 #include "SDLGraphicsProgram.hpp"
+#include "Sphere.hpp"
+#include "glm/glm.hpp"
 
 #include <iostream>
 #include <string>
@@ -16,7 +18,7 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) {
 	m_window = NULL;
 
 	// Initialize SDL
-	if(SDL_Init(SDL_INIT_VIDEO)< 0) {
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		errorStream << "SDL could not initialize! SDL Error: " << SDL_GetError() << "\n";
 		success = false;
 	} else {
@@ -42,41 +44,27 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) {
 			success = false;
 		}
 
-		// Create an OpenGL Graphics Context
-		m_openGLContext = SDL_GL_CreateContext( m_window );
-		if (m_openGLContext == NULL){
-			errorStream << "OpenGL context could not be created! SDL Error: " << SDL_GetError() << "\n";
-			success = false;
-		}
-
-		// Initialize GLAD Library
-		if (!gladLoadGLLoader(SDL_GL_GetProcAddress)){
-			errorStream << "Failed to iniitalize GLAD\n";
-			success = false;
-		}
-
-		//Initialize OpenGL
-		if (!InitGL()){
+		// Initialize OpenGL
+		if (!InitGL(errorStream)){
 			errorStream << "Unable to initialize OpenGL!\n";
 			success = false;
 		}
+
+        // Initialize our renderer
+        InitRender(w, h);
   	}
 
     // If initialization did not work, then print out a list of errors in the constructor.
     if (!success) {
         errorStream << "SDLGraphicsProgram::SDLGraphicsProgram - Failed to initialize!\n";
-        std::string errors=errorStream.str();
-        SDL_Log("%s\n",errors.c_str());
+        std::string errors = errorStream.str();
+        SDL_Log("%s\n", errors.c_str());
     } else {
         SDL_Log("SDLGraphicsProgram::SDLGraphicsProgram - No SDL, GLAD, or OpenGL, errors detected during initialization\n\n");
     }
 
 	// SDL_LogSetAllPriority(SDL_LOG_PRIORITY_WARN); // Uncomment to enable extra debug support!
 	GetOpenGLVersionInfo();
-
-    // Initialize the scene and generate a rendering context
-    InitScene();
-    InitRender(w, h);
 }
 
 SDLGraphicsProgram::~SDLGraphicsProgram(){
@@ -91,8 +79,28 @@ SDLGraphicsProgram::~SDLGraphicsProgram(){
 	SDL_Quit();
 }
 
-bool SDLGraphicsProgram::InitGL(){
-	return true;
+bool SDLGraphicsProgram::InitGL(std::stringstream& errorStream){
+    bool success = true;
+    // Create an OpenGL Graphics Context
+    m_openGLContext = SDL_GL_CreateContext(m_window);
+    if (m_openGLContext == NULL){
+        errorStream << "OpenGL context could not be created! SDL Error: " << SDL_GetError() << "\n";
+        success = false;
+    }
+    // Initialize GLAD Library
+    if (!gladLoadGLLoader(SDL_GL_GetProcAddress)){
+        errorStream << "Failed to initialize GLAD\n";
+        success = false;
+    }
+    return success;
+}
+
+void SDLGraphicsProgram::InitRender(int w, int h) {
+    // glm::vec3 position(0.0f, 0.0f, 0.0f);
+    // glm::vec3 direction(0.0f, 0.0f, -1.0f);
+    // glm::vec3 up(0.0f, 1.0f, 0.0f);
+    // Camera* camera = new Camera(w, h, position, direction, up);
+    m_renderer = new Renderer(w, h);
 }
 
 void SDLGraphicsProgram::InitScene() {
@@ -114,10 +122,7 @@ void SDLGraphicsProgram::InitScene() {
     platform_node->SetPosition(0.0, 5.0, 0.0);
     platform_node->SetOrientation(.5);
     sphere_node->SetPosition(0.0, 8.0, 0.0);
-}
 
-void SDLGraphicsProgram::InitRender(int w, int h) {
-    m_renderer = new Renderer(w,h);
     m_renderer->SetRoot(m_sceneTree->GetRoot());
 }
 
