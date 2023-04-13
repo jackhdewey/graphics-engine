@@ -1,4 +1,4 @@
-#include "VertexBufferLayout.hpp"
+#include "Objects/VertexBufferLayout.hpp"
 #include <iostream>
 
 VertexBufferLayout::VertexBufferLayout(){

@@ -1,7 +1,6 @@
 #include <string>
-#include <iostream>
 
-#include "Renderer.hpp"
+#include "Scene/Renderer.hpp"
 
 Renderer::Renderer(unsigned int w, unsigned int h){
 

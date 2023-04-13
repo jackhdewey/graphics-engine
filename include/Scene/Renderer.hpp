@@ -11,10 +11,10 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 #include "SceneNode.hpp"
-#include "Camera.hpp"
+#include "Scene/Camera.hpp"
 #include "Shader.hpp"
 
 #include <vector>

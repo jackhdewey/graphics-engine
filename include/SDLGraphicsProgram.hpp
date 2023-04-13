@@ -19,8 +19,8 @@
     #include <SDL.h>
 #endif
 
-#include "Renderer.hpp"
-#include "SceneTree.hpp"
+#include "Scene/Renderer.hpp"
+#include "Scene/SceneTree.hpp"
 
 /**
  * This class contains an SDL graphics program
@@ -42,14 +42,14 @@ public:
     ~SDLGraphicsProgram();
 
     /**
-     * Return a boolean indicating whether initialization was successful
+     * Initialize OpenGL
      *
-     * @return a boolean
+     * @return boolean indicating whether initialization was successful
      */
     bool InitGL(std::stringstream& errorStream);
 
     /**
-     * Set up the renderer.
+     * Create renderer
      */
     void InitRender(int w, int h);
 
@@ -70,7 +70,7 @@ public:
     SDL_Window* GetSDLWindow();
 
     /**
-     * Helper Function to Query OpenGL information.
+     * Retrieve OpenGL information.
      */
     void GetOpenGLVersionInfo();
 
@@ -81,10 +81,10 @@ private:
     // OpenGL context
     SDL_GLContext m_openGLContext;
 
-    // The scene tree stores the relationships between objects in this scene
-    SceneTree* m_sceneTree;
-    // The Renderer responsible for drawing objects in OpenGL
+    // The renderer is responsible for drawing objects in OpenGL
     Renderer* m_renderer;
+    // The scene tree stores the objects and their positions in a scene
+    SceneTree* m_sceneTree;
 
 };
 

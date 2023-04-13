@@ -12,10 +12,10 @@
 
 #include <vector>
 
-#include "Camera.hpp"
-#include "Object.hpp"
-#include "Transform.hpp"
-#include "Shader.hpp"
+#include "Scene/Camera.hpp"
+#include "Objects/Object.hpp"
+#include "Scene/Transform.hpp"
+#include "Scene/Shader.hpp"
 
 #include "glm/vec3.hpp"
 #include "glm/gtc/matrix_transform.hpp"

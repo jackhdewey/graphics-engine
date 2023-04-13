@@ -7,7 +7,7 @@
  *  @bug No known bugs.
  */
 
-#include "OBJModel.hpp"
+#include "Objects/OBJModel.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>

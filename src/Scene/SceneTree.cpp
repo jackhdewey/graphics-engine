@@ -1,4 +1,4 @@
-#include "SceneTree.hpp"
+#include "Scene/SceneTree.hpp"
 
 #include <string>
 #include <iostream>

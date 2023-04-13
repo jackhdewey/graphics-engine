@@ -9,7 +9,7 @@
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include "glm/vec3.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-#include "Sphere.hpp"
+#include "Objects/Sphere.hpp"
 
 // Constructor is empty
 ObjectManager::ObjectManager() {

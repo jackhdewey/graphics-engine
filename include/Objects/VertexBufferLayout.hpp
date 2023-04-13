@@ -9,7 +9,7 @@
 #ifndef VERTEX_BUFFER_LAYOUT_HPP
 #define VERTEX_BUFFER_LAYOUT_HPP
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 /**
  * THis class represents the Vertex Buffer Object (VBO) for an object

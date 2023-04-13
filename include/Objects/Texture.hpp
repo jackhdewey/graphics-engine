@@ -9,9 +9,9 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 
-#include "Image.hpp"
+#include "Objects/Image.hpp"
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <string>
 
 class Texture{

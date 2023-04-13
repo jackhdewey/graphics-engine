@@ -1,5 +1,5 @@
 #include "SDLGraphicsProgram.hpp"
-#include "Sphere.hpp"
+#include "Objects/Sphere.hpp"
 #include "glm/glm.hpp"
 
 #include <iostream>
@@ -31,14 +31,8 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) {
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 		// Create window
-		m_window = SDL_CreateWindow( "Lab",
-                                SDL_WINDOWPOS_UNDEFINED,
-                                SDL_WINDOWPOS_UNDEFINED,
-                                w,
-                                h,
+		m_window = SDL_CreateWindow( "Lab",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED, w, h,
                                 SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
-
-		// Check if Window did not create
 		if (m_window == NULL){
 			errorStream << "Window could not be created! SDL Error: " << SDL_GetError() << "\n";
 			success = false;
@@ -96,14 +90,11 @@ bool SDLGraphicsProgram::InitGL(std::stringstream& errorStream){
 }
 
 void SDLGraphicsProgram::InitRender(int w, int h) {
-    // glm::vec3 position(0.0f, 0.0f, 0.0f);
-    // glm::vec3 direction(0.0f, 0.0f, -1.0f);
-    // glm::vec3 up(0.0f, 1.0f, 0.0f);
-    // Camera* camera = new Camera(w, h, position, direction, up);
     m_renderer = new Renderer(w, h);
 }
 
 void SDLGraphicsProgram::InitScene() {
+    // Create objects and populate scene
     Object* floor = new Object();
     OBJModel* model = new OBJModel("../objects/base_surface/base_surface.obj");
     floor->LoadObjectModel(model);
@@ -124,17 +115,14 @@ void SDLGraphicsProgram::InitScene() {
     sphere_node->SetPosition(0.0, 8.0, 0.0);
 
     m_renderer->SetRoot(m_sceneTree->GetRoot());
+    m_renderer->GetCamera()->SetCameraEyePosition(0.0f,5.0f,30.0f);
 }
 
 void SDLGraphicsProgram::Loop(){
 
-    // Set a default position for our camera
-    m_renderer->GetCamera()->SetCameraEyePosition(0.0f,0.0f,30.0f);
-
     // If quit = 'true' then the program terminates.
     bool quit = false;
     bool pause = false;
-    bool ready = false;
     bool change = false;
 
     // SDL Event Handler
@@ -186,13 +174,13 @@ void SDLGraphicsProgram::Loop(){
                             m_renderer->GetCamera()->MoveDown(cameraSpeed);
                             break;
                         case SDLK_SPACE:
-                            ready = true;
+                            break;
+                        default:
+                            break;
                     }
-                break;
                 case SDL_KEYUP:
                     switch(e.key.keysym.sym) {
                         case SDLK_SPACE:
-                            ready = false;
                             change = true;
                             break;
                     }
@@ -214,7 +202,7 @@ void SDLGraphicsProgram::Loop(){
         // Delay to slow things down just a bit!
         SDL_Delay(25);  // You can change this or implement a frame
                         // independent movement method if you like.
-      	//Update screen of our specified window
+      	// Update screen of our specified window
       	SDL_GL_SwapWindow(GetSDLWindow());
 	}
     //Disable text input
@@ -222,12 +210,12 @@ void SDLGraphicsProgram::Loop(){
 }
 
 
-// Get Pointer to Window
+// Get pointer to window
 SDL_Window* SDLGraphicsProgram::GetSDLWindow(){
   return m_window;
 }
 
-// Helper Function to get OpenGL Version Information
+// Get OpenGL Version Information
 void SDLGraphicsProgram::GetOpenGLVersionInfo(){
 	SDL_Log("(Note: If you have two GPUs, make sure the correct one is selected)");
 	SDL_Log("Vendor: %s",(const char*)glGetString(GL_VENDOR));

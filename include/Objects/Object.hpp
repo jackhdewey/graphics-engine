@@ -8,15 +8,15 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 #include <vector>
 #include <string>
 
 #include "VertexBufferLayout.hpp"
 #include "Texture.hpp"
-#include "Transform.hpp"
-#include "Geometry.hpp"
+#include "Scene/Transform.hpp"
+#include "Objects/Geometry.hpp"
 #include "OBJModel.hpp"
 
 #include "glm/vec3.hpp"

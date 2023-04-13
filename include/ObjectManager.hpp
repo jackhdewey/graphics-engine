@@ -8,9 +8,9 @@
 #ifndef OBJECTMANAGER_HPP
 #define OBJECTMANAGER_HPP
 
-#include "SceneTree.hpp"
-#include "Object.hpp"
-#include "Sphere.hpp"
+#include "Scene/SceneTree.hpp"
+#include "Objects/Object.hpp"
+#include "Objects/Sphere.hpp"
 
 /**
  * This class manages the objects in a scene

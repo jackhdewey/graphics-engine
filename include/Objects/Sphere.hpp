@@ -11,7 +11,7 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
-#include "Object.hpp"
+#include "Objects/Object.hpp"
 #include <cmath>
 
 class Sphere : public Object {

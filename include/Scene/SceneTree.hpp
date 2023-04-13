@@ -6,8 +6,8 @@
 #define SCENETREE_HPP
 
 #include "SceneNode.hpp"
-#include "Renderer.hpp"
-#include "Shader.hpp"
+#include "Scene/Renderer.hpp"
+#include "Scene/Shader.hpp"
 
 /**
  * This class describes a scene tree that stores the relationships

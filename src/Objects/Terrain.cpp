@@ -1,5 +1,5 @@
-#include "Terrain.hpp"
-#include "Image.hpp"
+#include "Objects/Terrain.hpp"
+#include "Objects/Image.hpp"
 
 #include <iostream>
 

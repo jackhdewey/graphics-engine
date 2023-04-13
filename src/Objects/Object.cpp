@@ -1,5 +1,5 @@
-#include "Object.hpp"
-#include "Camera.hpp"
+#include "Objects/Object.hpp"
+#include "Scene/Camera.hpp"
 #include "Error.hpp"
 
 Object::Object(){}

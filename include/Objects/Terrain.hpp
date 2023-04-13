@@ -11,8 +11,8 @@
 
 #include "VertexBufferLayout.hpp"
 #include "Texture.hpp"
-#include "Image.hpp"
-#include "Object.hpp"
+#include "Objects/Image.hpp"
+#include "Objects/Object.hpp"
 
 #include <vector>
 #include <string>

@@ -4,7 +4,7 @@
     #include <SDL.h>
 #endif
 
-#include "Texture.hpp"
+#include "Objects/Texture.hpp"
 
 #include <stdio.h>
 #include <string.h>

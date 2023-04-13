@@ -1,4 +1,4 @@
-#include "SceneNode.hpp"
+#include "Scene/SceneNode.hpp"
 
 #include <string>
 #include <iostream>
