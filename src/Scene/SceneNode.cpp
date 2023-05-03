@@ -1,13 +1,14 @@
 #include "Scene/SceneNode.hpp"
 
 #include <string>
-#include <iostream>
 
 SceneNode::SceneNode(Object* object, SceneNode* parent, bool wireframe) {
 
     m_object = object;
     m_parent = parent;
-    parent->AddChild(this);
+    if (parent != nullptr) {
+        parent->AddChild(this);
+    }
     m_angularVelocity = 0.01f;
     m_wireframe = wireframe;
 

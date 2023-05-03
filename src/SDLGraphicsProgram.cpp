@@ -1,5 +1,5 @@
-#include "SDLGraphicsProgram.hpp"
-#include "Objects/Sphere.hpp"
+#include "../include/SDLGraphicsProgram.hpp"
+#include "./Objects/Sphere.hpp"
 #include "glm/glm.hpp"
 
 #include <iostream>
@@ -93,26 +93,27 @@ void SDLGraphicsProgram::InitRender(int w, int h) {
     m_renderer = new Renderer(w, h);
 }
 
+SceneNode* SDLGraphicsProgram::CreateGameObject(std::string filename, SceneNode* parent, float x, float y, float z) {
+    Object* obj = new Object();
+    OBJModel* model = new OBJModel(filename);
+    obj->LoadObjectModel(model);
+    SceneNode* node = new SceneNode(obj, parent,false);
+    node->SetPosition(x,y,z);
+    return node;
+}
+
 void SDLGraphicsProgram::InitScene() {
     // Create objects and populate scene
-    Object* floor = new Object();
-    OBJModel* model = new OBJModel("../objects/base_surface/base_surface.obj");
-    floor->LoadObjectModel(model);
-    SceneNode* floor_node = new SceneNode(floor, false);
+    SceneNode* floor = CreateGameObject("../objects/base_surface/base_surface.obj", nullptr, 0.0, 0.0, 0.0);
 
-    m_sceneTree = &SceneTree::Instance(floor_node);
-
-    Object* platform = new Object();
-    model = new OBJModel("../objects/platform_one/platform_one.obj");
-    platform->LoadObjectModel(model);
-    SceneNode* platform_node = new SceneNode(platform, floor_node, false);
+    SceneNode* platform = CreateGameObject("../objects/platform_one/platform_one.obj", floor, 0.0, 5.0, 0.0);
+    platform->SetOrientation(.5);
 
     Object* sphere = new Sphere();
-    SceneNode* sphere_node = new SceneNode(sphere, floor_node, false);
-
-    platform_node->SetPosition(0.0, 5.0, 0.0);
-    platform_node->SetOrientation(.5);
+    SceneNode* sphere_node = new SceneNode(sphere, floor, false);
     sphere_node->SetPosition(0.0, 8.0, 0.0);
+
+    m_sceneTree = &SceneTree::Instance(floor);
 
     m_renderer->SetRoot(m_sceneTree->GetRoot());
     m_renderer->GetCamera()->SetCameraEyePosition(0.0f,5.0f,30.0f);

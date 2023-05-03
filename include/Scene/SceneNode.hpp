@@ -13,9 +13,10 @@
 #include <vector>
 
 #include "Scene/Camera.hpp"
-#include "Objects/Object.hpp"
 #include "Scene/Transform.hpp"
 #include "Scene/Shader.hpp"
+
+#include "Objects/Object.hpp"
 
 #include "glm/vec3.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -132,8 +133,8 @@ protected:
 
 private:
 
-    // Vector containing pointers to the children of this node
-    std::vector<SceneNode*> m_children;
+    // Mesh stored at this node
+    Object* m_object;
 
     // Transform (relative to parent)
     Transform m_localTransform;
@@ -144,12 +145,13 @@ private:
     glm::vec3 m_linearVelocity;
     float m_angularVelocity;
 
-    // Mesh stored at this node
-    Object* m_object;
-    // Boolean indicating whether we want to render in wireframe mode
-    bool m_wireframe;
     // Shader for this node
     Shader m_shader;
+    // Boolean indicating whether we want to render in wireframe mode
+    bool m_wireframe;
+
+    // Vector containing pointers to the children of this node
+    std::vector<SceneNode*> m_children;
 
 };
 

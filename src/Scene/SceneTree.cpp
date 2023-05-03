@@ -1,7 +1,6 @@
 #include "Scene/SceneTree.hpp"
 
 #include <string>
-#include <iostream>
 
 SceneTree::SceneTree(SceneNode* rootNode){
     m_root = rootNode;

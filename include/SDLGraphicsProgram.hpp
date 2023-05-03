@@ -19,8 +19,11 @@
     #include <SDL.h>
 #endif
 
-#include "Scene/Renderer.hpp"
-#include "Scene/SceneTree.hpp"
+#include "glad/glad.h"
+
+#include "./Scene/Renderer.hpp"
+#include "./Scene/SceneTree.hpp"
+#include "./Scene/Camera.hpp"
 
 /**
  * This class contains an SDL graphics program
@@ -52,6 +55,14 @@ public:
      * Create renderer
      */
     void InitRender(int w, int h);
+
+    /**
+     * Create an object from a .obj filepath.
+     *
+     * @param filename
+     * @return
+     */
+    SceneNode* CreateGameObject(std::string filename, SceneNode* parent, float x, float y, float z);
 
     /**
      * Set up the initial scene.
