@@ -31,7 +31,7 @@ public:
     Object* GetObject(unsigned int index);
 
     // Retrieve a reference to the vector of all objects
-    std::vector<Object*>* GetObjects();
+    std::vector<Object*>& GetObjects();
 
     // Generate a specified number of spheres
     void GenSpheres(unsigned int num);
@@ -45,7 +45,7 @@ private:
     ObjectManager();
 
     // Objects in our scene
-    std::vector<Object*>* m_objects;
+    std::vector<Object*> m_objects;
 };
 
 #endif

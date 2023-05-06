@@ -5,23 +5,39 @@
  *  @bug No known bugs.
  */
 
-// TODO: Relocate shader to scene graph
-
 #ifndef SCENENODE_HPP
 #define SCENENODE_HPP
 
-#include <vector>
-
-#include "Scene/Camera.hpp"
+#include "Objects/Object.hpp"
 #include "Scene/Transform.hpp"
 #include "Scene/Shader.hpp"
 
-#include "Objects/Object.hpp"
-
 #include "glm/vec3.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+
+#include <vector>
 
 class SceneNode {
+private:
+
+    // Mesh stored at this node
+    Object* m_object;
+
+    // Transform (relative to parent)
+    Transform m_localTransform;
+    // Transform (relative to scene - i.e. the root)
+    Transform m_worldTransform;
+
+    // Kinematic data for this node
+    glm::vec3 m_linearVelocity;
+
+    // Vector containing pointers to the children of this node
+    std::vector<SceneNode*> m_children;
+
+protected:
+
+    // The parent of this node
+    SceneNode* m_parent;
+
 public:
 
     /**
@@ -31,7 +47,7 @@ public:
      * @param parent the parent node for this node
      * @param wireframe
      */
-    SceneNode(Object* object, SceneNode* parent, bool wireframe);
+    SceneNode(Object* object, SceneNode* parent);
 
     /**
      * Constructor creates a node containing the given object.
@@ -39,12 +55,24 @@ public:
      * @param object the object to be stored at this node
      * @param wireframe
      */
-    SceneNode(Object* object, bool wireframe);
+    SceneNode(Object* object);
 
     /**
      * Destructor frees memory associated with this node and each of its children.
      */
     ~SceneNode();
+
+    /**
+     * Update this scene node and all its children.
+     *
+     * @param pause
+     */
+    void Update(bool pause);
+
+    /**
+     * Draws the object stored at this node.
+     */
+    void Render(Shader& shader);
 
     /**
      * Retrieve the object stored at this node.
@@ -64,7 +92,7 @@ public:
     /**
      * Add multiple child nodes to this node.
      */
-    void AddChildren(std::vector<Object*>* children);
+    void AddChildren(std::vector<Object*>& children);
 
     /**
      * Return the children of this node.
@@ -109,49 +137,9 @@ public:
     Transform& GetWorldTransform();
 
     /**
-     * Update this scene nodes (and all its children).
-     *
-     * @param camera
-     * @param pause
-     */
-    void Update(Camera*& camera, bool pause);
-
-    /**
-     * Draws the object stored at this node.
-     */
-    void Render();
-
-    /**
      * Runs a dedicated simulation of bouncing balls in a rotating cube.
      */
     void BouncingBalls();
-
-protected:
-
-    // The parent of this node
-    SceneNode* m_parent;
-
-private:
-
-    // Mesh stored at this node
-    Object* m_object;
-
-    // Transform (relative to parent)
-    Transform m_localTransform;
-    // Transform (relative to scene - i.e. the root)
-    Transform m_worldTransform;
-
-    // Kinematic data for this node
-    glm::vec3 m_linearVelocity;
-    float m_angularVelocity;
-
-    // Shader for this node
-    Shader m_shader;
-    // Boolean indicating whether we want to render in wireframe mode
-    bool m_wireframe;
-
-    // Vector containing pointers to the children of this node
-    std::vector<SceneNode*> m_children;
 
 };
 

@@ -44,11 +44,11 @@ SDLGraphicsProgram::SDLGraphicsProgram(int w, int h) {
 			success = false;
 		}
 
-        // Initialize our renderer
+        // Initialize renderer
         InitRender(w, h);
   	}
 
-    // If initialization did not work, then print out a list of errors in the constructor.
+    // If initialization failed, print out a list of errors
     if (!success) {
         errorStream << "SDLGraphicsProgram::SDLGraphicsProgram - Failed to initialize!\n";
         std::string errors = errorStream.str();
@@ -97,7 +97,7 @@ SceneNode* SDLGraphicsProgram::CreateGameObject(std::string filename, SceneNode*
     Object* obj = new Object();
     OBJModel* model = new OBJModel(filename);
     obj->LoadObjectModel(model);
-    SceneNode* node = new SceneNode(obj, parent,false);
+    SceneNode* node = new SceneNode(obj, parent);
     node->SetPosition(x,y,z);
     return node;
 }
@@ -110,7 +110,7 @@ void SDLGraphicsProgram::InitScene() {
     platform->SetOrientation(.5);
 
     Object* sphere = new Sphere();
-    SceneNode* sphere_node = new SceneNode(sphere, floor, false);
+    SceneNode* sphere_node = new SceneNode(sphere, floor);
     sphere_node->SetPosition(0.0, 8.0, 0.0);
 
     m_sceneTree = &SceneTree::Instance(floor);
@@ -194,22 +194,20 @@ void SDLGraphicsProgram::Loop(){
             change = false;
         }
 
-        // Update our scene through our renderer
-        m_sceneTree->Update(m_renderer->GetCamera(), pause);
+        // Update scene
+        m_sceneTree->Update(pause);
 
-        // Render our scene using our selected renderer
+        // Render scene
         m_renderer->Render();
 
         // Delay to slow things down just a bit!
-        SDL_Delay(25);  // You can change this or implement a frame
-                        // independent movement method if you like.
-      	// Update screen of our specified window
+        SDL_Delay(25);
+      	// Update window
       	SDL_GL_SwapWindow(GetSDLWindow());
 	}
-    //Disable text input
+    // Disable text input
     SDL_StopTextInput();
 }
-
 
 // Get pointer to window
 SDL_Window* SDLGraphicsProgram::GetSDLWindow(){

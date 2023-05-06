@@ -1,10 +1,7 @@
 #include "Scene/SceneTree.hpp"
-
 #include <string>
 
-SceneTree::SceneTree(SceneNode* rootNode){
-    m_root = rootNode;
-}
+SceneTree::SceneTree(SceneNode* root) : m_root(root){}
 
 SceneTree::~SceneTree() {}
 
@@ -13,12 +10,10 @@ SceneTree& SceneTree::Instance(SceneNode* rootNode){
     return *instance;
 }
 
-SceneNode* SceneTree::GetRoot() {
-    return m_root;
-}
-
-void SceneTree::Update(Camera*& camera, bool pause) {
-    m_root->Update(camera, pause);
+void SceneTree::Update(bool pause) {
+    if (m_root != nullptr) {
+        m_root->Update(pause);
+    }
 }
 
 void SceneTree::RandomizeLocations() {

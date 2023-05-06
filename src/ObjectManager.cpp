@@ -8,7 +8,6 @@
 // Constructor is empty
 ObjectManager::ObjectManager() {
     std::cout << "(ObjectManager.cpp) Constructor called\n";
-    m_objects = new std::vector<Object*>;
 }
 
 ObjectManager& ObjectManager::Instance() {
@@ -17,16 +16,16 @@ ObjectManager& ObjectManager::Instance() {
 }
 
 void ObjectManager::AddObject(Object*& o){
-    m_objects->push_back(o);
+    m_objects.push_back(o);
 }
 
 // Retrieve a reference to an object
 Object* ObjectManager::GetObject(unsigned int index) {
-    return m_objects->at(index);
+    return m_objects.at(index);
 }
 
 // Retrieve a reference to the vector of all objects
-std::vector<Object*>* ObjectManager::GetObjects(){
+std::vector<Object*>& ObjectManager::GetObjects(){
     return m_objects;
 }
 
@@ -34,7 +33,7 @@ void ObjectManager::GenSpheres(unsigned int num) {
     for (int i = 0; i < num; i++) {
         Object* tempObj = new Sphere();
         tempObj->LoadTexture("rock.ppm");
-        m_objects->push_back(tempObj);
+        m_objects.push_back(tempObj);
     }
 }
 

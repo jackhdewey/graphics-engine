@@ -9,9 +9,9 @@ Shader::~Shader(){
 	glDeleteProgram(m_programID);
 }
 
-std::string Shader::LoadShader(const std::string& fname){
+std::string Shader::LoadShader(const std::string& file_name){
 
-    std::ifstream myFile(fname.c_str());
+    std::ifstream myFile(file_name.c_str());
     std::string line;
     std::string result;
 

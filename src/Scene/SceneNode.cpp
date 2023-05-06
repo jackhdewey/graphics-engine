@@ -1,38 +1,15 @@
 #include "Scene/SceneNode.hpp"
-
 #include <string>
 
-SceneNode::SceneNode(Object* object, SceneNode* parent, bool wireframe) {
-
-    m_object = object;
-    m_parent = parent;
+SceneNode::SceneNode(Object* object, SceneNode* parent) : m_object(object), m_parent(parent) {
     if (parent != nullptr) {
         parent->AddChild(this);
     }
-    m_angularVelocity = 0.01f;
-    m_wireframe = wireframe;
-
-    std::string vertexShader = m_shader.LoadShader("../shaders/vert.glsl");
-    std::string fragmentShader = m_shader.LoadShader("../shaders/depthmap.glsl");
-    m_shader.CreateProgram(vertexShader, fragmentShader);
-    if (m_object->HasTexture()) {
-        m_shader.SetUniform1i("u_DiffuseMap", 0);
-    }
 }
 
-SceneNode::SceneNode(Object* object, bool wireframe) {
-
+SceneNode::SceneNode(Object* object) {
     m_object = object;
     m_parent = nullptr;
-    m_angularVelocity = 0.01f;
-    m_wireframe = wireframe;
-
-    std::string vertexShader = m_shader.LoadShader("../shaders/vert.glsl");
-    std::string fragmentShader = m_shader.LoadShader("../shaders/depthmap.glsl");
-    m_shader.CreateProgram(vertexShader, fragmentShader);
-    if (m_object->HasTexture()) {
-        m_shader.SetUniform1i("u_DiffuseMap", 0);
-    }
 }
 
 SceneNode::~SceneNode(){
@@ -41,54 +18,40 @@ SceneNode::~SceneNode(){
 	}
 }
 
-void SceneNode::Update(Camera*& camera, bool pause){
+void SceneNode::Update(bool pause){
 
-    // Bind to this node's shader
-    m_shader.Bind();
+    // Empty for now
 
-    // Send camera position
-    m_shader.SetUniform3f("cameraPosition", camera->GetEyeXPosition(),
-                                            camera->GetEyeYPosition(),
-                                            camera->GetEyeZPosition());
-
-    // Send the MVP Matrix
-    m_shader.SetUniformMatrix4fv("model", &m_localTransform.GetInternalMatrix()[0][0]);
-    m_shader.SetUniformMatrix4fv("view", &camera->GetWorldToViewMatrix()[0][0]);
-    m_shader.SetUniformMatrix4fv("projection", &camera->GetProjectionMatrix()[0][0]);
-
-    // Send light information
-    m_shader.SetUniform3f("lightPos", 0.0f, 10.0f, 0.0f);
-    m_shader.SetUniform3f("lightColor", 1.0f, 1.0f, 1.0f);
-    m_shader.SetUniform1f("ambientIntensity", 0.6f);
-    m_shader.SetUniform1f("specularStrength", 0.5f);
-
-    // Update child node's
     for (int i = 0; i < m_children.size(); i++) {
-        m_children[i]->Update(camera, pause);
+        m_children[i]->Update(pause);
     }
 }
 
-void SceneNode::Render(){
+void SceneNode::Render(Shader& shader){
 
-    // Bind to this node's shader
-    m_shader.Bind();
+    //if (m_wireframe) {
+    //    glDisable(GL_TEXTURE_2D);
+    //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //} else {
 
-    if (m_wireframe) {
-        glDisable(GL_TEXTURE_2D);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    } else {
-        glEnable(GL_TEXTURE_2D);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
+    //}
+
+    glEnable(GL_TEXTURE_2D);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    shader.SetUniformMatrix4fv("model", &m_localTransform.GetInternalMatrix()[0][0]);
 
     // Render our object
     if (m_object != nullptr) {
+        if (m_object->HasTexture()) {
+            shader.SetUniform1i("u_DiffuseMap", 0);
+        }
         m_object->Render();
     }
 
     // Also render any 'child nodes'
     for (int i = 0; i < m_children.size(); i++) {
-        m_children[i]->Render();
+        m_children[i]->Render(shader);
     }
 }
 
@@ -97,9 +60,9 @@ void SceneNode::AddChild(SceneNode* n) {
     m_children.push_back(n);
 }
 
-void SceneNode::AddChildren(std::vector<Object*>* children) {
-    for (int i = 0; i < children->size(); i++) {
-        SceneNode* tempNode = new SceneNode(children->at(i), this, false);
+void SceneNode::AddChildren(std::vector<Object*>& children) {
+    for (int i = 0; i < children.size(); i++) {
+        SceneNode* tempNode = new SceneNode(children.at(i), this);
         m_children.push_back(tempNode);
     }
 }
@@ -147,7 +110,7 @@ void SceneNode::BouncingBalls() {
 
     if (m_object != nullptr) {
         if (m_parent == nullptr) {
-            m_localTransform.Rotate(m_angularVelocity, 0.0, 1.0, 0.0);
+            // m_localTransform.Rotate(m_angularVelocity, 0.0, 1.0, 0.0);
             m_worldTransform = m_localTransform;
         } else {
             m_worldTransform = m_parent->m_worldTransform * m_localTransform;

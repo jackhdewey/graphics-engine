@@ -6,24 +6,21 @@
 #define SCENETREE_HPP
 
 #include "SceneNode.hpp"
-#include "Renderer.hpp"
-#include "Shader.hpp"
 
 /**
- * This class represents a scene tree that stores the relationships
- * between elements (objects) making up a scene
+ * The scene tree stores, organizes, and updates the positions of scene elements (objects).
  */
 class SceneTree {
 
-public:
+private:
 
-    /**
-     * Retrieve the singleton instance of scene tree
-     *
-     * @param rootObj
-     * @return a reference to the created scene tree
-     */
-    static SceneTree& Instance(SceneNode* rootNode);
+    // The root of the tree
+    SceneNode* m_root;
+
+    // Private constructor
+    SceneTree(SceneNode* rootNode);
+
+public:
 
     /**
      * Destructor
@@ -31,34 +28,36 @@ public:
     ~SceneTree();
 
     /**
-     * Retrieve a pointer to the root node
+     * Retrieves the singleton instance of scene tree.
+     *
+     * @param rootObj
+     * @return a reference to the created scene tree
      */
-    SceneNode* GetRoot();
+    static SceneTree& Instance(SceneNode* root);
 
     /**
-     * Randomize the locations of the root's children
+     * Updates the scene
+     *
+     * @param camera
+     */
+    void Update(bool pause);
+
+    /**
+     * Randomizes the locations of each scene element
      */
     void RandomizeLocations();
 
     /**
-     * Randomize the forward directions for the root's children
+     * Randomizes the velocities of each scene element
      */
     void RandomizeDirections();
 
     /**
-     * Update the entire scene tree
-     *
-     * @param camera
+     * Retrieves a pointer to the root node
      */
-    void Update(Camera*& camera, bool pause);
-
-private:
-
-    // Private constructor
-    SceneTree(SceneNode* rootNode);
-
-    // The root of the tree
-    SceneNode* m_root;
+    SceneNode*& GetRoot() {
+        return m_root;
+    }
 
 };
 

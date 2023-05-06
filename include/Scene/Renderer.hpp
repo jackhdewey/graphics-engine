@@ -13,9 +13,9 @@
 
 #include "glad/glad.h"
 
-#include "SceneNode.hpp"
-#include "Scene/Camera.hpp"
 #include "Shader.hpp"
+#include "Camera.hpp"
+#include "SceneNode.hpp"
 
 #include <vector>
 
@@ -23,6 +23,17 @@
  * This class renders the scene.
  */
 class Renderer {
+
+private:
+    // Screen dimensions
+    int m_screenHeight;
+    int m_screenWidth;
+    // Perspective camera
+    Camera* m_camera;
+    // Shader program
+    Shader m_shader;
+    // Root of the scene tree
+    SceneNode* m_root;
 
 public:
 
@@ -40,11 +51,6 @@ public:
     ~Renderer();
 
     /**
-     * Updates the scene tree.
-     */
-    void Update(bool pause);
-
-    /**
      * Renders the scene.
      */
     void Render();
@@ -58,22 +64,11 @@ public:
     }
 
     /**
-     * Returns the camera.
+     * Returns a pointer to the camera.
      */
     Camera*& GetCamera(){
         return m_camera;
     }
-
-protected:
-
-    Camera* m_camera;
-    SceneNode* m_root;
-
-private:
-
-    // Screen dimensions
-    int m_screenHeight;
-    int m_screenWidth;
 
 };
 

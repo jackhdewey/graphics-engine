@@ -1,10 +1,7 @@
-/** @file Shader.hpp
+/**
+ *  @file Shader.hpp
  *  @brief Manages the loading, compiling, and linking of vertex and fragment shaders.
- *  
  *  Additionally has functions for setting various uniforms.
- *
- *  @author Mike
- *  @bug No known bugs.
  */
 #ifndef SHADER_HPP
 #define SHADER_HPP
@@ -35,10 +32,10 @@ public:
     /**
      * Copy the contents of a shader file into a string.
      *
-     * @param fname the name of the shader file
+     * @param file_name the name of the shader file
      * @return a string containing the program code
      */
-    std::string LoadShader(const std::string& fname);
+    std::string LoadShader(const std::string& file_name);
 
     /**
      * Creates a shader program given vertex and fragment shader source strings and updated m_programID.

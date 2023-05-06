@@ -23,12 +23,22 @@
 
 #include "./Scene/Renderer.hpp"
 #include "./Scene/SceneTree.hpp"
-#include "./Scene/Camera.hpp"
 
 /**
  * This class contains an SDL graphics program
  */
 class SDLGraphicsProgram{
+
+private:
+    // Output window
+    SDL_Window* m_window;
+    // OpenGL context
+    SDL_GLContext m_openGLContext;
+    // Draws objects in OpenGL
+    Renderer* m_renderer;
+    // Stores and organizes scene nodes based on their locations
+    SceneTree* m_sceneTree;
+
 public:
 
     /**
@@ -84,18 +94,6 @@ public:
      * Retrieve OpenGL information.
      */
     void GetOpenGLVersionInfo();
-
-private:
-
-    // The window we'll be rendering to
-    SDL_Window* m_window;
-    // OpenGL context
-    SDL_GLContext m_openGLContext;
-
-    // The renderer is responsible for drawing objects in OpenGL
-    Renderer* m_renderer;
-    // The scene tree stores the objects and their positions in a scene
-    SceneTree* m_sceneTree;
 
 };
 
