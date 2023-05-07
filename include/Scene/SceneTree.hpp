@@ -1,5 +1,11 @@
 /**
- * Created by Jack Dewey on 6/21/22.
+ *  @file SceneTree.hpp
+ *  @brief The SceneTree class is responsible for 'updating' the scene.
+ *
+ * 	Stores a pointer to the root of the scene.
+ *
+ *  @author Jack Dewey
+ *  @bug No known bugs.
  */
 
 #ifndef SCENETREE_HPP

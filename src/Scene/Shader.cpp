@@ -1,5 +1,4 @@
 #include "Scene/Shader.hpp"
-
 #include <iostream>
 #include <fstream>
 

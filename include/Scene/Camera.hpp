@@ -1,7 +1,7 @@
 /** @file Camera.hpp
- *  @brief Sets up an OpenGL camera.
+ *  @brief An OpenGL camera
  *
- *  The camera sets up our view and projection matrices.
+ *  Contains view and projection matrices.
  *
  *  @author Mike Shah
  *  @bug No known bugs.

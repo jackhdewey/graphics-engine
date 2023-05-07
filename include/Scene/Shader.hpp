@@ -1,8 +1,11 @@
 /**
  *  @file Shader.hpp
- *  @brief Manages the loading, compiling, and linking of vertex and fragment shaders.
- *  Additionally has functions for setting various uniforms.
+ *  @brief Manages the loading, compiling, and linking of shader programs.
+ *
+ *  @author Jack
+ *  @bug No known bugs.
  */
+
 #ifndef SHADER_HPP
 #define SHADER_HPP
 

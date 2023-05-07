@@ -1,7 +1,7 @@
-/*
+/**
  * Helper header file for error handling in OpenGL
- *
  */
+
 #ifndef ERROR_HPP
 #define ERROR_HPP
 

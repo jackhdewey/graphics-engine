@@ -1,6 +1,5 @@
-#include <string>
-
 #include "Scene/Renderer.hpp"
+#include <string>
 
 Renderer::Renderer(unsigned int w, unsigned int h) : m_camera(new Camera(w,h)),
                                                     m_screenHeight(h), m_screenWidth(w){

@@ -1,10 +1,10 @@
-/** @file Renderer.hpp
- *  @brief Renderer is responsible for drawing.
+/**
+ *  @file Renderer.hpp
+ *  @brief Renderer class is responsible for rendering a scene.
  *
- * 	The renderer is responsible for drawing the entire scene.
- * 	It contains a camera and a pointer to the root of the scene graph.
+ * 	Contains a camera, a shader program, and a pointer to the root of the scene.
  *
- *  @author Mike Shah
+ *  @author Jack Dewey
  *  @bug No known bugs.
  */
 

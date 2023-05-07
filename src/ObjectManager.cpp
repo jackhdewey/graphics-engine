@@ -1,9 +1,7 @@
 #include "ObjectManager.hpp"
-
+#include "Objects/Sphere.hpp"
 #include <string>
 #include <iostream>
-
-#include "Objects/Sphere.hpp"
 
 // Constructor is empty
 ObjectManager::ObjectManager() {

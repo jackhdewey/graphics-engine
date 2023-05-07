@@ -1,7 +1,10 @@
-/** @file SceneNode.hpp
- *  @brief SceneNode describes an element in a 3D graphics scene graph
+/**
+ *  @file SceneNode.hpp
+ *  @brief SceneNode describes an element in a scene.
  *
- *  @author Jack
+ *  Contains a mesh, local, and global transforms, and pointers to connected nodes.
+ *
+ *  @author Jack Dewey
  *  @bug No known bugs.
  */
 

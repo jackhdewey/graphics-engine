@@ -1,7 +1,8 @@
-/** @file ObjectManager.hpp
- *  @brief Class to manage creation of objects
+/**
+ *  @file ObjectManager.hpp
+ *  @brief Manages allocation and storage of objects.
  *
- *  @author Mike
+ *  @author Jack Dewey
  *  @bug No known bugs.
  */
 
@@ -16,6 +17,14 @@
  * This class manages the objects in a scene
  */
 class ObjectManager{
+private:
+
+    // Constructor
+    ObjectManager();
+
+    // Objects in our scene
+    std::vector<Object*> m_objects;
+
 public:
 
     // Singleton
@@ -39,13 +48,6 @@ public:
     // Populate the scene
     void Populate(SceneTree* tree);
 
-private:
-
-	// Constructor
-    ObjectManager();
-
-    // Objects in our scene
-    std::vector<Object*> m_objects;
 };
 
 #endif

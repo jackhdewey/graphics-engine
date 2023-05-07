@@ -1,5 +1,4 @@
 #include "Scene/Camera.hpp"
-
 #include "glm/gtx/transform.hpp"
 #include "glm/gtx/rotate_vector.hpp"
 

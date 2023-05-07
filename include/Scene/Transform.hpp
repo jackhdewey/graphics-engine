@@ -1,8 +1,10 @@
-/** @file Transform.hpp
- *  @brief Responsible for holding matrix operations in model, view, and projection space
+/**
+ *  @file Transform.hpp
+ *  @brief Represents the location and posse of a scene element.
  *
+ *  Responsible for applying matrix transformations to this transform.
  *
- *  @author Mike
+ *  @author Mike Shah
  *  @bug No known bugs.
  */
 
